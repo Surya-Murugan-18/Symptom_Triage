@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:symtom_checker/about_you_page.dart';
+import 'package:flutter/services.dart';
 
 // 🌐 Language imports
 import 'package:symtom_checker/language/app_state.dart';
@@ -15,7 +16,11 @@ class EmergencyContactPage extends StatefulWidget {
 class _EmergencyContactPageState extends State<EmergencyContactPage> {
   final _formKey = GlobalKey<FormState>();
   List<Map<String, dynamic>> _contacts = [
-    {'name': TextEditingController(), 'phone': TextEditingController(), 'relationship': null}
+    {
+      'name': TextEditingController(),
+      'phone': TextEditingController(),
+      'relationship': null,
+    },
   ];
 
   final Color primary = const Color(
@@ -110,7 +115,7 @@ class _EmergencyContactPageState extends State<EmergencyContactPage> {
                             _contacts.add({
                               'name': TextEditingController(),
                               'phone': TextEditingController(),
-                              'relationship': null
+                              'relationship': null,
                             });
                           });
                         },
@@ -192,11 +197,19 @@ class _EmergencyContactPageState extends State<EmergencyContactPage> {
     required TextEditingController controller,
     required String hint,
     TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? customValidator,
+    List<TextInputFormatter>? inputFormatters,
   }) {
+    final lang = AppState.selectedLanguage;
+    final strings = AppStrings.data[lang]!;
+
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
-      validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+      inputFormatters: inputFormatters, // ✅ ADD THIS
+      validator:
+          customValidator ??
+          (v) => (v == null || v.trim().isEmpty) ? strings['required']! : null,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(color: Colors.grey[400]),
@@ -219,55 +232,40 @@ class _EmergencyContactPageState extends State<EmergencyContactPage> {
   }
 
   Widget _roundedDropdown(int contactIndex) {
-  final lang = AppState.selectedLanguage;
-  final strings = AppStrings.data[lang]!;
+    final lang = AppState.selectedLanguage;
+    final strings = AppStrings.data[lang]!;
 
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12),
-    decoration: BoxDecoration(
-      color: Colors.grey[100],
-      borderRadius: BorderRadius.circular(30),
-      border: Border.all(color: Colors.grey.shade300),
-    ),
-    child: DropdownButtonFormField<String>(
-      value: _contacts[contactIndex]['relationship'],
-      isDense: false,
-      dropdownColor: Colors.white,
-      decoration: const InputDecoration(border: InputBorder.none),
-      hint: Text(
-        strings['select']!,
-        style: const TextStyle(color: Colors.grey),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.grey.shade300),
       ),
-      icon: const Icon(Icons.arrow_drop_down, color: Colors.teal),
-      items: [
-        DropdownMenuItem(
-          value: 'parent',
-          child: Text(strings['parent']!),
+      child: DropdownButtonFormField<String>(
+        value: _contacts[contactIndex]['relationship'],
+        isDense: false,
+        dropdownColor: Colors.white,
+        decoration: const InputDecoration(border: InputBorder.none),
+        hint: Text(
+          strings['select']!,
+          style: const TextStyle(color: Colors.grey),
         ),
-        DropdownMenuItem(
-          value: 'spouse',
-          child: Text(strings['spouse']!),
-        ),
-        DropdownMenuItem(
-          value: 'sibling',
-          child: Text(strings['sibling']!),
-        ),
-        DropdownMenuItem(
-          value: 'friend',
-          child: Text(strings['friend']!),
-        ),
-        DropdownMenuItem(
-          value: 'other',
-          child: Text(strings['other']!),
-        ),
-      ],
-      onChanged: (v) => setState(() => _contacts[contactIndex]['relationship'] = v),
-      validator: (v) => (v == null || v.isEmpty)
-          ? strings['relationship']!
-          : null,
-    ),
-  );
-}
+        icon: const Icon(Icons.arrow_drop_down, color: Colors.teal),
+        items: [
+          DropdownMenuItem(value: 'parent', child: Text(strings['parent']!)),
+          DropdownMenuItem(value: 'spouse', child: Text(strings['spouse']!)),
+          DropdownMenuItem(value: 'sibling', child: Text(strings['sibling']!)),
+          DropdownMenuItem(value: 'friend', child: Text(strings['friend']!)),
+          DropdownMenuItem(value: 'other', child: Text(strings['other']!)),
+        ],
+        onChanged: (v) =>
+            setState(() => _contacts[contactIndex]['relationship'] = v),
+        validator: (v) =>
+            (v == null || v.isEmpty) ? strings['required']! : null,
+      ),
+    );
+  }
 
   List<Widget> _buildContactForms() {
     final strings = AppStrings.data[AppState.selectedLanguage]!;
@@ -304,6 +302,17 @@ class _EmergencyContactPageState extends State<EmergencyContactPage> {
         _roundedField(
           controller: _contacts[i]['name'],
           hint: strings['name_hint']!,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'[\p{L}\s]', unicode: true),
+            ),
+          ],
+          customValidator: (v) {
+            if (v == null || v.trim().isEmpty) {
+              return strings['required']!;
+            }
+            return null;
+          },
         ),
 
         const SizedBox(height: 18),
@@ -336,13 +345,23 @@ class _EmergencyContactPageState extends State<EmergencyContactPage> {
           controller: _contacts[i]['phone'],
           hint: strings['phone_hint_emergency']!,
           keyboardType: TextInputType.phone,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          customValidator: (v) {
+  if (v == null || v.trim().isEmpty) {
+    return strings['required']!;
+  }
+  if (v.length != 10) {
+    return strings['phone_invalid']!;
+  }
+  return null;
+},
+
         ),
       ]);
     }
 
     return forms;
   }
-
 }
 
 /*

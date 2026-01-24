@@ -33,22 +33,32 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   geolocator: ^10.0.0
   geocoding: ^2.0.0
- 
+  google_maps_flutter: ^2.14.0
+  intl: ^0.20.2
+  file_picker: ^8.0.0
+  agora_rtc_engine: ^6.3.0
+  permission_handler: ^11.4.0
+  lucide_icons_flutter: ^3.1.9
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  http: ^1.6.0
+  lucide_icons: ^0.257.0
+  image_picker: ^1.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^6.0.0
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -64,6 +74,41 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    -  assets/logo.png
+   -  assets/clinic1.jpg
+   -  assets/clinic2.jpg
+   -  assets/article1.png
+   -  assets/article2.png
+   -  assets/article3.png
+   -  assets/R1.png
+   -  assets/R2.png
+   -  assets/R3.png
+   -  assets/D1.png
+   -  assets/D2.png
+   -  assets/D3.png
+   -  assets/D4.png
+   -  assets/D5.png
+   -  assets/D6.jpg
+   -  assets/med.jpeg
+   -  assets/P1.png
+   -  assets/P2.png
+   -  assets/P3.png
+   -  assets/P4.png
+   -  assets/heart.png
+   -  assets/lungs.png
+   -  assets/kidney.png
+   -  assets/skin.png
+   -  assets/eye.png
+   -  assets/fever.png
+   -  assets/covid.png
+   -  assets/breast.png
+   
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/logo.png
+
+   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

@@ -143,7 +143,7 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: 1.0,
+                    childAspectRatio: 0.75,
                   ),
                   itemCount: languages.length,
                   itemBuilder: (context, index) {
@@ -281,13 +281,13 @@ class LanguageCard extends StatelessWidget {
           color: backgroundColor,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Stack(
-          children: [
-            // Language name at top
-            Positioned(
-              top: 16,
-              left: 16,
-              child: Text(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Language name at top
+              Text(
                 language.name,
                 style: TextStyle(
                   color: textColor,
@@ -296,29 +296,27 @@ class LanguageCard extends StatelessWidget {
                   letterSpacing: 0.3,
                 ),
               ),
-            ),
 
-            // Large character in center
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  language.displayChar,
-                  style: TextStyle(
-                    color: charColor,
-                    fontSize: 120,
-                    fontWeight: FontWeight.w900,
-                    height: 1.0,
+              // Spacing between name and character
+              const SizedBox(height: 10),
+
+              // Large character with proper sizing
+              Expanded(
+                child: Center(
+                  child: Text(
+                    language.displayChar,
+                    style: TextStyle(
+                      color: charColor,
+                      fontSize: 90,
+                      fontWeight: FontWeight.w900,
+                      height: 1.0,
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Play icon at bottom left
-            Positioned(
-              bottom: 12,
-              left: 12,
-              child: Container(
+              // Play icon at bottom left
+              Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.05),
@@ -330,8 +328,8 @@ class LanguageCard extends StatelessWidget {
                   size: 20,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

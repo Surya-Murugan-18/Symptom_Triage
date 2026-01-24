@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/forget_password.dart';
 import 'package:symtom_checker/homepage.dart';
 import 'package:symtom_checker/login.dart';
 import 'package:symtom_checker/signup.dart';
@@ -31,6 +32,10 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool _obscure = true;
+  final _formKey = GlobalKey<FormState>();
+  final _emailRegex = RegExp(r'^.+@.+\..+$');
+  final _passwordRegex =
+      RegExp(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$&*~]).{8,}$');
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +46,11 @@ class _SignInPageState extends State<SignInPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
               // Header
               Row(
                 children: [
@@ -125,6 +132,15 @@ class _SignInPageState extends State<SignInPage> {
                     contentPadding:
                         const EdgeInsets.symmetric(vertical: 25),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return AppStrings.data[lang]!['email_empty']!;
+                    }
+                    if (!_emailRegex.hasMatch(value.trim())) {
+                      return AppStrings.data[lang]!['email_invalid']!;
+                    }
+                    return null;
+                  },
                 ),
               ),
 
@@ -160,6 +176,24 @@ class _SignInPageState extends State<SignInPage> {
                           setState(() => _obscure = !_obscure),
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppStrings.data[lang]!['pwd_empty']!;
+                    }
+                    if (value.length < 8) {
+                      return AppStrings.data[lang]!['pwd_len']!;
+                    }
+                    if (!value.contains(RegExp(r'[A-Z]'))) {
+                      return AppStrings.data[lang]!['pwd_upper']!;
+                    }
+                    if (!value.contains(RegExp(r'[0-9]'))) {
+                      return AppStrings.data[lang]!['pwd_number']!;
+                    }
+                    if (!value.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>]'))) {
+                      return AppStrings.data[lang]!['pwd_symbol']!;
+                    }
+                    return null;
+                  },
                 ),
               ),
 
@@ -168,7 +202,14 @@ class _SignInPageState extends State<SignInPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgetPasswordPage(),
+                      ),
+                    );
+                  },
                   child: Text(
                     AppStrings.data[lang]!['forgot_password']!,
                     style:
@@ -184,11 +225,14 @@ class _SignInPageState extends State<SignInPage> {
                 height: 52,
                 child: ElevatedButton(
                   onPressed: () {
-
+                    final isValid = _formKey.currentState?.validate() ?? false;
+                    if (!isValid) return;
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HealthcareHomePage()),
-                      );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HealthcareHomePage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -305,40 +349,9 @@ class _SignInPageState extends State<SignInPage> {
 ),
 
 
-              const SizedBox(height: 16),
+        
 
-              // Facebook
-              Center(
-  child: FractionallySizedBox(
-    widthFactor: 0.92,
-    child: SizedBox(
-      height: 54,
-      child: OutlinedButton.icon(
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: Colors.grey.shade300),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-          backgroundColor: Colors.white,
-        ),
-        icon: const FaIcon(
-          FontAwesomeIcons.facebookF,
-          size: 26,
-          color: Color(0xFF1877F2),
-        ),
-        label: Text(
-          AppStrings.data[lang]!['facebook_signin']!,
-          style: const TextStyle(
-            color: Colors.black87,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onPressed: () {},
-      ),
-    ),
-  ),
-),
+              
 
 
               const SizedBox(height: 24),
@@ -355,6 +368,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
             ],
+            ),
           ),
         ),
       ),

@@ -13,11 +13,13 @@ class AboutYouPage extends StatefulWidget {
 }
 
 class _AboutYouPageState extends State<AboutYouPage> {
-  bool hasLongTermProblem = true;
+  bool hasLongTermProblem = false;
   bool takesMedicines = false;
   String healthProblem = '';
   bool agreeTerms = false;
   bool allowUse = false;
+  String bpLevel = "Low"; // default
+
 
   final Color accent = const Color(0xFF15B09A);
   final Color lightAccent = const Color(0xFFF1FFFC);
@@ -87,7 +89,6 @@ class _AboutYouPageState extends State<AboutYouPage> {
                       setState(() => hasLongTermProblem = false);
                     }),
                     const Spacer(),
-                    _speakerIcon(),
                   ],
                 ),
               ),
@@ -138,7 +139,7 @@ class _AboutYouPageState extends State<AboutYouPage> {
 
               // Second question
               _questionBlock(
-                title: strings['q2']!,
+                title: strings['q3']!,
                 child: Row(
                   children: [
                     _radOption(strings['yes']!, takesMedicines, () {
@@ -149,12 +150,38 @@ class _AboutYouPageState extends State<AboutYouPage> {
                       setState(() => takesMedicines = false);
                     }),
                     const Spacer(),
-                    _speakerIcon(),
                   ],
                 ),
               ),
 
               const SizedBox(height: 22),
+
+
+
+           _questionBlock(
+  title: strings['q2']!, // Do you have blood pressure?
+  child: Row(
+    children: [
+      _radOption(strings['low']!, bpLevel == "Low", () {
+        setState(() => bpLevel = "Low");
+      }),
+      const SizedBox(width: 18),
+      _radOption(strings['Medium']!, bpLevel == "Medium", () {
+        setState(() => bpLevel = "Medium");
+      }),
+      const SizedBox(width: 18),
+      _radOption(strings['High']!, bpLevel == "High", () {
+        setState(() => bpLevel = "High");
+      }),
+      const Spacer(),
+    ],
+  ),
+),
+
+
+              const SizedBox(height: 22),
+
+              
 
               // Checkboxes
               Row(

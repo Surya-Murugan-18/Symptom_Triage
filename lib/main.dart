@@ -92,11 +92,26 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Logo
+                // Logo with error handling
                 Image.asset(
                   'assets/logo.png',
                   width: 200,
                   height: 200,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1BAA9A).withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.medical_services,
+                        size: 100,
+                        color: Color(0xFF1BAA9A),
+                      ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 20),

@@ -24,7 +24,13 @@ class AppStrings {
       "last_name": "கடைசி பெயர்",
       "last_name_hint": "உங்கள் கடைசி பெயரை உள்ளிடுங்கள்",
       "dob": "பிறந்த தேதி",
+      'required': 'தேவை',
+
       "dob_hint": "DD/MM/YYYY",
+      "Age": "வயது",
+      "age_hint": "பிறந்த தேதியிலிருந்து தானாக கணக்கிடப்பட்டது",
+      "email": "மின்னஞ்சல்",
+      "pass": "கடவுச்சொல்",
       "gender": "பாலினம்",
       "select": "தேர்வு செய்யவும்",
       "male": "ஆண்",
@@ -32,7 +38,7 @@ class AppStrings {
       "other": "மற்றவை",
       "location": "இடம்",
       "address": "முகவரி",
-      "contact": "தொடர்பு",
+      "contact": "தொடர்பு எண்",
       "phone_hint": "உங்கள் தொலைபேசி எண்ணை உள்ளிடுங்கள்",
       "emergency_hint": "அவசர தொடர்பு",
       "name": "பெயர்",
@@ -45,18 +51,74 @@ class AppStrings {
       "phone_hint_emergency": "அவர்களின் தொலைபேசி ",
       "add_another_contact": "மற்றொரு தொடர்பைச் சேர்க்கவும்",
       "about": "உங்களைப் பற்றி",
-"q1": "உங்களுக்கு ஏதேனும் நீண்டகால உடல்நலப் பிரச்சனை உள்ளதா?",
-"yes": "ஆம்",
-"no": "இல்லை",
-"if_yes": "ஆம் என்றால்,",
-"mention_problem": "உங்கள் உடல்நலப் பிரச்சனையை குறிப்பிடுங்கள்",
-"q2": "நீங்கள் முறையாக எந்த மருந்துகளையும் எடுத்துக்கொள்கிறீர்களா?",
-"t1": "நான் விதிமுறைகள் மற்றும் நிபந்தனைகளை ஏற்கிறேன்",
-"t2": "இந்த தகவல் அவசர உதவி அல்லது சிறந்த வழிகாட்டலுக்காக மட்டுமே பயன்படுத்தப்படுவதற்கு நான் அனுமதி அளிக்கிறேன்.",
-"complete": "முடிக்கவும்!",
-"success": "வெற்றி",
-"subtitle": "உங்கள் கணக்கு வெற்றிகரமாக\nபதிவு செய்யப்பட்டுள்ளது"
+      "q1": "உங்களுக்கு ஏதேனும் நீண்டகால உடல்நலப் பிரச்சனை உள்ளதா?",
+      "yes": "ஆம்",
+      "no": "இல்லை",
+      "if_yes": "ஆம் என்றால்,",
+      "mention_problem": "உங்கள் உடல்நலப் பிரச்சனையை குறிப்பிடுங்கள்",
+      "q2": "உங்களுக்கு பிளட் பிரஷர் இருக்கிறதா?",
+      "q3": "உங்களுக்கு டயபட்டீஸ் இருக்கிறதா?",
+      "low": "குறைவு",
+      "Medium": "மிதமான",
+      "High": "அதிகம்",
+      "t1": "நான் விதிமுறைகள் மற்றும் நிபந்தனைகளை ஏற்கிறேன்",
+      "t2":
+          "இந்த தகவல் அவசர உதவி அல்லது சிறந்த வழிகாட்டலுக்காக மட்டுமே பயன்படுத்தப்படுவதற்கு நான் அனுமதி அளிக்கிறேன்.",
+      "complete": "முடிக்கவும்!",
+      "success": "வெற்றி",
+      "subtitle": "உங்கள் கணக்கு வெற்றிகரமாக\nபதிவு செய்யப்பட்டுள்ளது",
 
+      'pwd_empty': 'கடவுச்சொல்லை உள்ளிடவும்',
+      'pwd_len': 'கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்',
+      'pwd_upper': 'குறைந்தது ஒரு பெரிய எழுத்து இருக்க வேண்டும்',
+      'pwd_symbol': 'குறைந்தது ஒரு குறியீடு இருக்க வேண்டும்',
+      'pwd_number': 'குறைந்தது ஒரு எண் இருக்க வேண்டும்',
+
+      'email_empty': 'தயவுசெய்து உங்கள் மின்னஞ்சலை உள்ளிடுங்கள்',
+      'email_invalid': 'சரியான மின்னஞ்சலை உள்ளிடுங்கள்',
+      'phone_invalid': 'சரியான 10 இலக்க எண்ணை உள்ளிடுங்கள்',
+'phone': 'தொலைபேசி',
+'name_required': '{field} தேவை',
+'name_letters_only': '{field} எழுத்துகள் மட்டும் கொண்டிருக்க வேண்டும்',
+
+'contact_required': 'தொடர்பு எண் தேவை',
+'contact_numbers_only': 'தொடர்பு எண் எண்கள் மட்டும் கொண்டிருக்க வேண்டும்',
+'contact_min_len': 'தொடர்பு எண் குறைந்தது 10 இலக்கங்கள் இருக்க வேண்டும்',
+
+'dob_required': 'பிறந்த தேதி தேவை',
+"gender_required":"பாலினம் தேவை",
+"location_required":"இடம் தேவை",
+
+
+'forgot_password_title': 'கடவுச்சொல்லை மறந்துவிட்டீர்களா',
+'forgot_password_desc':
+    'உங்கள் மின்னஞ்சல் அல்லது தொலைபேசி எண்ணை உள்ளிடுங்கள்,\nஉங்களுக்கு உறுதிப்படுத்தல் குறியீடு அனுப்பப்படும்',
+'reset_password': 'கடவுச்சொல்லை மாற்றவும்',
+
+'otp_email_subtitle':
+    'உங்கள் மின்னஞ்சலுக்கு அனுப்பிய குறியீட்டை உள்ளிடுங்கள் {value}',
+'otp_phone_subtitle':
+    'உங்கள் எண்ணிற்கு அனுப்பிய குறியீட்டை உள்ளிடுங்கள் {value}',
+
+'otp_resend_email_success':
+    'உங்கள் பதிவு செய்யப்பட்ட மின்னஞ்சலுக்கு OTP வெற்றிகரமாக அனுப்பப்பட்டது',
+'otp_resend_phone_success':
+    'உங்கள் பதிவு செய்யப்பட்ட எண்ணிற்கு OTP வெற்றிகரமாக அனுப்பப்பட்டது',
+
+'otp_title': 'சரிபார்ப்பு குறியீட்டை உள்ளிடுங்கள்',
+'verify': 'சரிபார்க்கவும்',
+'otp_not_received': 'குறியீடு கிடைக்கவில்லையா? ',
+'resend': 'மீண்டும் அனுப்பவும்',
+
+'verifying_otp': 'OTP சரிபார்க்கப்படுகிறது: {otp}',
+
+'create_new_password': 'புதிய கடவுச்சொல்லை உருவாக்குங்கள்',
+'create_password_desc': 'உங்கள் புதிய கடவுச்சொல்லை உருவாக்கவும்',
+'new_password': 'புதிய கடவுச்சொல்',
+'confirm_password': 'கடவுச்சொல்லை உறுதிப்படுத்தவும்',
+'pwd_mismatch': 'கடவுச்சொல்கள் பொருந்தவில்லை',
+'create_password_button': 'கடவுச்சொல்லை உருவாக்குங்கள்',
+'password_reset_success': 'நீங்கள் உங்கள் கடவுச்சொல்லை வெற்றிகரமாக மீட்டமைத்துவிட்டீர்கள்.',
 
     },
 
@@ -83,6 +145,19 @@ class AppStrings {
       'last_name_hint': 'Enter your last name',
       'dob': 'Date of birth',
       'dob_hint': 'DD/MM/YYYY',
+      'required': 'Required',
+'phone': 'Phone',
+      'forgot_password_title': 'Forgot Password',
+'forgot_password_desc':
+    'Enter your email or your phone number, we\nwill send you confirmation code',
+'reset_password': 'Reset Password',
+
+
+'dob_required': 'Date of Birth is required',
+      "Age": "Age",
+      "age_hint": "Auto-calculated from Date of Birth",
+      "email": "Email",
+      "pass": "Password",
       'gender': 'Gender',
       'select': 'Select',
       'male': 'Male',
@@ -108,13 +183,60 @@ class AppStrings {
       "no": "No",
       "if_yes": "If yes,",
       "mention_problem": "Mention your health problem",
-      "q2": "Do you take any regular medicines?",
+      "q2": "Do you have blood pressure ? ",
+      "q3": "Do you have diabetes? ",
+      "low": "Low",
+      "Medium": "Medium",
+      "High": "High",
       "t1": "I agree the terms and conditions",
       "t2":
           "I allow this information to be used only for emergency help or better guidance.",
       "complete": "Complete !",
-      "success":"Success",
-      "subtitle":"Your account has been successfully\nregistered",
+      "success": "Success",
+      "subtitle": "Your account has been successfully\nregistered",
+
+      'pwd_empty': 'Please enter a password',
+      'pwd_len': 'Password must be at least 8 characters',
+      'pwd_upper': 'Password must contain at least one capital letter',
+      'pwd_symbol': 'Password must contain at least one symbol',
+      'pwd_number': 'Password must contain at least one number',
+      'email_empty': 'Please enter an email',
+      'email_invalid': 'Please enter a valid email',
+      'phone_invalid': 'Enter valid 10-digit number',
+
+'name_required': '{field} is required',
+'name_letters_only': '{field} should contain only letters',
+
+'contact_required': 'Contact number is required',
+'contact_numbers_only': 'Contact should contain only numbers',
+'contact_min_len': 'Contact number must be at least 10 digits',
+"gender_required":"Gender is required",
+"location_required":"Location is required",
+
+'otp_email_subtitle': 'Enter code that we have sent to your email {value}',
+'otp_phone_subtitle': 'Enter code that we have sent to your number {value}',
+
+
+'otp_resend_email_success':
+    'Successfully sent the OTP to your registered email id',
+'otp_resend_phone_success':
+    'Successfully sent the OTP to your registered number',
+
+'otp_title': 'Enter Verification Code',
+'verify': 'Verify',
+'otp_not_received': "Didn't receive the code? ",
+'resend': 'Resend',
+
+'verifying_otp': 'Verifying OTP: {otp}',
+
+'create_new_password': 'Create New Password',
+'create_password_desc': 'Create your new password to login',
+'new_password': 'New password',
+'confirm_password': 'Confirm password',
+'pwd_mismatch': 'Passwords do not match',
+'create_password_button': 'Create Password',
+'password_reset_success': 'You have successfully reset your password.',
+
     },
 
     AppLanguage.hindi: {
@@ -139,7 +261,14 @@ class AppStrings {
       "last_name": "अंतिम नाम",
       "last_name_hint": "अपना अंतिम नाम दर्ज करें",
       "dob": "जन्म तिथि",
+      'required': 'आवश्यक',
+
       "dob_hint": "DD/MM/YYYY",
+      "Age": "आयु",
+      "age_hint": "जन्म तिथि से स्वचालित रूप से गणना की गई",
+      "email": "ईमेल",
+      "pass": "पासवर्ड",
+
       "gender": "लिंग",
       "select": "चुनें",
       "male": "पुरुष",
@@ -165,14 +294,73 @@ class AppStrings {
       "no": "नहीं",
       "if_yes": "यदि हाँ,",
       "mention_problem": "अपनी स्वास्थ्य समस्या बताएं",
-      "q2": "क्या आप नियमित रूप से कोई दवा लेते हैं?",
+      "q2": "क्या आपको ब्लड प्रेशर है?",
+      "q3": "क्या आपको डायबिटीज है?",
+      "low": "कम",
+      "Medium": "मध्यम",
+      "High": "ज्यादा",
+
       "t1": "मैं नियम और शर्तों से सहमत हूँ",
       "t2":
           "मैं इस जानकारी का उपयोग केवल आपातकालीन सहायता या बेहतर मार्गदर्शन के लिए करने की अनुमति देता/देती हूँ।",
       "complete": "पूरा करें!",
       "success": "सफलता",
-"subtitle": "आपका खाता सफलतापूर्वक\nपंजीकृत हो गया है",
+      "subtitle": "आपका खाता सफलतापूर्वक\nपंजीकृत हो गया है",
+      'pwd_empty': 'कृपया पासवर्ड दर्ज करें',
+      'pwd_len': 'पासवर्ड कम से कम 8 अक्षरों का होना चाहिए',
+      'pwd_upper': 'पासवर्ड में कम से कम एक बड़ा अक्षर होना चाहिए',
+      'pwd_symbol': 'पासवर्ड में कम से कम एक प्रतीक होना चाहिए',
+      'pwd_number': 'पासवर्ड में कम से कम एक संख्या होनी चाहिए',
 
+
+'forgot_password_title': 'पासवर्ड भूल गए?',
+'forgot_password_desc':
+    'अपना ईमेल या फोन नंबर दर्ज करें,\nहम आपको पुष्टि कोड भेजेंगे',
+'reset_password': 'पासवर्ड रीसेट करें',
+
+'phone': 'फोन',
+
+      'email_empty': 'कृपया ईमेल दर्ज करें',
+      'email_invalid': 'कृपया एक मान्य ईमेल दर्ज करें',
+      'phone_invalid': 'मान्य 10 अंकों का नंबर दर्ज करें',
+
+'name_required': '{field} आवश्यक है',
+'name_letters_only': '{field} में केवल अक्षर होने चाहिए',
+
+'contact_required': 'संपर्क नंबर आवश्यक है',
+'contact_numbers_only': 'संपर्क नंबर में केवल अंक होने चाहिए',
+'contact_min_len': 'संपर्क नंबर कम से कम 10 अंकों का होना चाहिए',
+"gender_required":"लिंग आवश्यक है",
+"location_required":"स्थान आवश्यक है",
+
+
+'otp_email_subtitle':
+    'आपके ईमेल पर भेजा गया कोड दर्ज करें {value}',
+'otp_phone_subtitle':
+    'आपके नंबर पर भेजा गया कोड दर्ज करें {value}',
+
+'otp_resend_email_success':
+    'आपके पंजीकृत ईमेल पर OTP सफलतापूर्वक भेजा गया',
+'otp_resend_phone_success':
+    'आपके पंजीकृत नंबर पर OTP सफलतापूर्वक भेजा गया',
+
+
+'otp_title': 'सत्यापन कोड दर्ज करें',
+'verify': 'सत्यापित करें',
+'otp_not_received': 'कोड प्राप्त नहीं हुआ? ',
+'resend': 'पुनः भेजें',
+
+'verifying_otp': 'OTP सत्यापित किया जा रहा है: {otp}',
+
+'create_new_password': 'नया पासवर्ड बनाएं',
+'create_password_desc': 'लॉगिन करने के लिए अपना नया पासवर्ड बनाएं',
+'new_password': 'नया पासवर्ड',
+'confirm_password': 'पासवर्ड की पुष्टि करें',
+'pwd_mismatch': 'पासवर्ड मेल नहीं खाते',
+'create_password_button': 'पासवर्ड बनाएं',
+'password_reset_success': 'आपने अपना पासवर्ड सफलतापूर्वक रीसेट कर दिया है।',
+
+'dob_required': 'जन्म तिथि आवश्यक है',
     },
   };
 }
