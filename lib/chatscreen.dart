@@ -49,7 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // ================= SEND MESSAGE =================
   Future<void> sendMessageToBackend(String userText) async {
   final response = await http.post(
-    Uri.parse("http://10.105.197.129:3000/chat"),
+    Uri.parse("http://192.168.43.25:3000/chat"),
     headers: {"Content-Type": "application/json"},
     body: jsonEncode({
       "sessionId": sessionId,
