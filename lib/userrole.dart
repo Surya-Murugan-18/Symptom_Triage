@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:symtom_checker/doctorsignin.dart';
+import 'package:symtom_checker/login.dart';
+import 'package:symtom_checker/language/app_state.dart';
+import 'package:symtom_checker/language/app_strings.dart';
 
 void main() {
   runApp(const SevAIApp());
@@ -23,8 +26,6 @@ class SevAIApp extends StatelessWidget {
   }
 }
 
-/* ================= USER ROLE PAGE ================= */
-
 class UserRolePage extends StatefulWidget {
   const UserRolePage({Key? key}) : super(key: key);
 
@@ -37,6 +38,9 @@ class _UserRolePageState extends State<UserRolePage> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppState.selectedLanguage;
+    final strings = AppStrings.data[lang]!;
+
     final isMobile = MediaQuery.of(context).size.width < 600;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -52,90 +56,80 @@ class _UserRolePageState extends State<UserRolePage> {
             vertical: isMobile ? 32.0 : 48.0,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: isMobile ? 24 : 48),
 
-              // Logo - Centered
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: isMobile ? 80 : 100,
-                  height: isMobile ? 80 : 100,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF199A8E).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: FaIcon(
-                      FontAwesomeIcons.stethoscope,
-                      size: isMobile ? 48 : 60,
-                      color: const Color(0xFF199A8E),
-                    ),
+              // Logo
+              Container(
+                width: isMobile ? 80 : 100,
+                height: isMobile ? 80 : 100,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF199A8E).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: FaIcon(
+                    FontAwesomeIcons.stethoscope,
+                    size: isMobile ? 48 : 60,
+                    color: const Color(0xFF199A8E),
                   ),
                 ),
               ),
 
               SizedBox(height: isMobile ? 32 : 48),
 
-              // Title - Centered
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'SEV-AI',
-                  style: TextStyle(
-                    fontSize: isMobile ? 32 : 48,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
+              // Title
+              Text(
+                strings['app_title']!,
+                style: TextStyle(
+                  fontSize: isMobile ? 32 : 48,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
                 ),
               ),
 
               SizedBox(height: isMobile ? 8 : 12),
 
-              // Subtitle - Centered
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Symptom Triage & Care Navigation',
-                  style: TextStyle(
-                    fontSize: isMobile ? 16 : 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
+              // Subtitle
+              Text(
+                strings['app_subtitle']!,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
                 ),
+                textAlign: TextAlign.center,
               ),
 
               SizedBox(height: isMobile ? 48 : 64),
 
-              // Continue as - Left Aligned
+              // Continue as
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Continue as',
+                  strings['continue_as']!,
                   style: TextStyle(
                     fontSize: isMobile ? 18 : 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
                   ),
                 ),
               ),
 
               SizedBox(height: isMobile ? 24 : 32),
 
-              // Role Cards - Full Width
               Column(
                 children: [
                   _buildRoleCard(
                     icon: FontAwesomeIcons.user,
-                    title: 'Patient',
-                    subtitle: 'Get symptom guidance',
+                    title: strings['role_patient']!,
+                    subtitle: strings['role_patient_desc']!,
                     isSelected: selectedRole == 'patient',
                     onTap: () {
-                      setState(() => selectedRole = 'patient');
-                      // Add your onPressed logic for Patient here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginPage()),
+                      );
                     },
                     isMobile: isMobile,
                   ),
@@ -144,16 +138,14 @@ class _UserRolePageState extends State<UserRolePage> {
 
                   _buildRoleCard(
                     icon: FontAwesomeIcons.userDoctor,
-                    title: 'Doctor',
-                    subtitle: 'Review cases & advise',
+                    title: strings['role_doctor']!,
+                    subtitle: strings['role_doctor_desc']!,
                     isSelected: selectedRole == 'doctor',
                     onTap: () {
                       Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DoctorSignIn(),
-                              ),
-                            );
+                        context,
+                        MaterialPageRoute(builder: (_) => DoctorSignIn()),
+                      );
                     },
                     isMobile: isMobile,
                   ),
@@ -162,12 +154,11 @@ class _UserRolePageState extends State<UserRolePage> {
 
                   _buildRoleCard(
                     icon: Icons.business,
-                    title: 'Organization',
-                    subtitle: 'Manage clinics',
+                    title: strings['role_org']!,
+                    subtitle: strings['role_org_desc']!,
                     isSelected: selectedRole == 'organization',
                     onTap: () {
                       setState(() => selectedRole = 'organization');
-                      // Add your onPressed logic for Organization here
                     },
                     isMobile: isMobile,
                   ),
@@ -176,17 +167,14 @@ class _UserRolePageState extends State<UserRolePage> {
 
               SizedBox(height: isMobile ? 48 : 64),
 
-              // Footer - Centered
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'By continuing, you agree to our Terms & Privacy Policy',
-                  style: TextStyle(
-                    fontSize: isMobile ? 13 : 13,
-                    color: Colors.grey[600],
-                  ),
-                  textAlign: TextAlign.center,
+              // Footer
+              Text(
+                strings['terms_privacy']!,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[600],
                 ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -201,104 +189,51 @@ class _UserRolePageState extends State<UserRolePage> {
     required String subtitle,
     required bool isSelected,
     required VoidCallback onTap,
-    bool isPrimary = false,
-    String? badge,
     required bool isMobile,
   }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: EdgeInsets.all(isMobile ? 16 : 20),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: isPrimary || isSelected
-                  ? const Color(0xFF199A8E)
-                  : Colors.grey[300]!,
-              width: isPrimary || isSelected ? 2.5 : 1.5,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: EdgeInsets.all(isMobile ? 16 : 20),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[300]!),
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: isMobile ? 48 : 56,
+              height: isMobile ? 48 : 56,
+              decoration: BoxDecoration(
+                color: const Color(0xFF199A8E).withOpacity(0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon,
+                  size: isMobile ? 28 : 32,
+                  color: const Color(0xFF199A8E)),
             ),
-            borderRadius: BorderRadius.circular(16),
-            color: isPrimary || isSelected
-                ? const Color(0xFF199A8E).withOpacity(0.05)
-                : Colors.white,
-          ),
-          child: Stack(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            SizedBox(width: isMobile ? 16 : 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Icon on the left
-                  Container(
-                    width: isMobile ? 48 : 56,
-                    height: isMobile ? 48 : 56,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF199A8E).withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      icon,
-                      size: isMobile ? 28 : 32,
-                      color: const Color(0xFF199A8E),
-                    ),
-                  ),
-                  SizedBox(width: isMobile ? 16 : 20),
-                  // Text content on the right
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: isMobile ? 16 : 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: isMobile ? 4 : 6),
-                        Text(
-                          subtitle,
-                          style: TextStyle(
-                            fontSize: isMobile ? 13 : 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  Text(title,
+                      style: TextStyle(
+                          fontSize: isMobile ? 16 : 18,
+                          fontWeight: FontWeight.bold)),
+                  SizedBox(height: isMobile ? 4 : 6),
+                  Text(subtitle,
+                      style: TextStyle(
+                          fontSize: isMobile ? 13 : 14,
+                          color: Colors.grey[600])),
                 ],
               ),
-
-              if (badge != null)
-                Positioned(
-                  top: isMobile ? 12 : 16,
-                  right: isMobile ? 12 : 16,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 8 : 10,
-                      vertical: isMobile ? 4 : 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF199A8E),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      badge,
-                      style: TextStyle(
-                        fontSize: isMobile ? 11 : 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-

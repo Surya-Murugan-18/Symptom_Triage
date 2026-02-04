@@ -120,6 +120,23 @@ class AppStrings {
 'create_password_button': 'கடவுச்சொல்லை உருவாக்குங்கள்',
 'password_reset_success': 'நீங்கள் உங்கள் கடவுச்சொல்லை வெற்றிகரமாக மீட்டமைத்துவிட்டீர்கள்.',
 
+
+'app_title': 'SEV-AI',
+'app_subtitle': 'அறிகுறி மதிப்பீடு மற்றும் சிகிச்சை வழிகாட்டல்',
+'continue_as': 'தொடரவும்',
+
+'role_patient': 'நோயாளர்',
+'role_patient_desc': 'அறிகுறி வழிகாட்டலைப் பெறுங்கள்',
+
+'role_doctor': 'மருத்துவர்',
+'role_doctor_desc': 'நோயாளி விவரங்களை மதிப்பாய்வு செய்யவும்',
+
+'role_org': 'நிறுவனம்',
+'role_org_desc': 'மருத்துவமனைகளை நிர்வகிக்கவும்',
+
+'terms_privacy':
+    'தொடர்வதன் மூலம் விதிமுறைகள் மற்றும் தனியுரிமை கொள்கையை ஏற்கிறீர்கள்',
+
     },
 
     AppLanguage.english: {
@@ -236,6 +253,23 @@ class AppStrings {
 'pwd_mismatch': 'Passwords do not match',
 'create_password_button': 'Create Password',
 'password_reset_success': 'You have successfully reset your password.',
+
+
+'app_title': 'SEV-AI',
+'app_subtitle': 'Symptom Triage & Care Navigation',
+'continue_as': 'Continue as',
+
+'role_patient': 'Patient',
+'role_patient_desc': 'Get symptom guidance',
+
+'role_doctor': 'Doctor',
+'role_doctor_desc': 'Review cases & advise',
+
+'role_org': 'Organization',
+'role_org_desc': 'Manage clinics',
+
+'terms_privacy':
+    'By continuing, you agree to our Terms & Privacy Policy',
 
     },
 
@@ -361,6 +395,23 @@ class AppStrings {
 'password_reset_success': 'आपने अपना पासवर्ड सफलतापूर्वक रीसेट कर दिया है।',
 
 'dob_required': 'जन्म तिथि आवश्यक है',
+
+'app_title': 'SEV-AI',
+'app_subtitle': 'लक्षण जांच और उपचार मार्गदर्शन',
+'continue_as': 'आगे बढ़ें',
+
+'role_patient': 'रोगी',
+'role_patient_desc': 'लक्षण मार्गदर्शन प्राप्त करें',
+
+'role_doctor': 'डॉक्टर',
+'role_doctor_desc': 'मामलों की समीक्षा करें और सलाह दें',
+
+'role_org': 'संस्था',
+'role_org_desc': 'क्लीनिक प्रबंधित करें',
+
+'terms_privacy':
+    'आगे बढ़ने पर आप नियम और गोपनीयता नीति से सहमत होते हैं',
+
     },
   };
 }

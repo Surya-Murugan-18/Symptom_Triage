@@ -5,6 +5,7 @@ import 'package:symtom_checker/login.dart';
 import 'package:symtom_checker/language/app_state.dart';
 import 'package:symtom_checker/language/app_strings.dart';
 import 'package:symtom_checker/language/app_language.dart';
+import 'package:symtom_checker/userrole.dart';
 
 class LanguageLoadingPage extends StatefulWidget {
   const LanguageLoadingPage({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _LanguageLoadingPageState extends State<LanguageLoadingPage>
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const LoginPage()),
+          MaterialPageRoute(builder: (_) => const UserRolePage()),
         );
       }
     });
