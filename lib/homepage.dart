@@ -8,6 +8,7 @@ import 'package:symtom_checker/articles.dart';
 import 'package:symtom_checker/chatscreen.dart';
 
 import 'package:symtom_checker/finddoctor.dart';
+import 'package:symtom_checker/health%20monitotring%201.dart';
 import 'package:symtom_checker/help.dart';
 import 'package:symtom_checker/insurance1.dart';
 import 'package:symtom_checker/medication%20remainder.dart';
@@ -300,7 +301,7 @@ class _HealthcareHomePageState extends State<HealthcareHomePage> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Iot()),
+                              MaterialPageRoute(builder: (context) => HealthMonitoringPage()),
                             );
                           },
                         ),

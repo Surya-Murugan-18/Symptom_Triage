@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/medication5.dart';
 
 
 class MedicationScheduleScreen extends StatefulWidget {
@@ -91,9 +92,9 @@ String _formatTime(TimeOfDay time) {
               const SizedBox(height: 16),
               // Time Picker
               _buildTimePicker(),
-              const SizedBox(height: 32),
+              
               // Frequency Section
-              const Text(
+        /*  const Text(
                 'Frequency',
                 style: TextStyle(
                   color: Colors.black,
@@ -106,7 +107,7 @@ String _formatTime(TimeOfDay time) {
               const SizedBox(height: 12),
               _buildFrequencyOption('Twice daily', 'twice_daily'),
               const SizedBox(height: 12),
-              _buildFrequencyOption('Custom', 'custom'),
+              _buildFrequencyOption('Custom', 'custom'), */
               const SizedBox(height: 32),
               // Duration Section
               const Text(
@@ -387,10 +388,11 @@ const SizedBox(height: 32),
       height: 48,
       child: ElevatedButton(
         onPressed: () {
-          // Handle save reminder logic
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Reminder saved successfully!')),
-          );
+        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ConfirmReminderPage()),
+                      );
+          
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF199A8E),

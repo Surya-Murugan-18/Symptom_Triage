@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/medication%20edit.dart';
+import 'package:symtom_checker/medication%20history.dart';
 import 'package:symtom_checker/medication3.dart';
+import 'package:symtom_checker/medication4.dart';
 
 class MedicationReminders extends StatefulWidget {
   const MedicationReminders({Key? key}) : super(key: key);
@@ -112,7 +115,13 @@ class _MedicationRemindersState extends State<MedicationReminders> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MedicationHistoryPage()),
+                        );
+                      },
                       icon: const FaIcon(FontAwesomeIcons.clock, size: 18),
                       label: Text(
                         'History',
@@ -242,13 +251,63 @@ class MedicationCard extends StatelessWidget {
                   ],
                 ),
                 PopupMenuButton(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.ellipsisVertical,
-                    size: 18,
-                    color: Colors.grey,
-                  ),
-                  itemBuilder: (context) => [],
-                ),
+  color: Colors.white, // ✅ popup background color
+
+  icon: const FaIcon(
+    FontAwesomeIcons.ellipsisVertical,
+    size: 18,
+    color: Colors.grey,
+  ),
+
+  itemBuilder: (context) => [
+    PopupMenuItem(
+      child: Row(
+        children: [
+          const FaIcon(
+            FontAwesomeIcons.pen,
+            size: 14,
+            color: Color(0xFF199A8E),
+          ),
+          const SizedBox(width: 12),
+          const Text(
+            'Edit',
+            style: TextStyle(color: Colors.black), // ✅ text color
+          ),
+        ],
+      ),
+      onTap: () {
+        // Navigate to edit page
+        Future.microtask(() {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditReminderPage(),
+            ),
+          );
+        });
+      },
+    ),
+
+    PopupMenuItem(
+      child: Row(
+        children: [
+          const FaIcon(
+            FontAwesomeIcons.trash,
+            size: 14,
+            color: Color(0xFF199A8E),
+          ),
+          const SizedBox(width: 12),
+          const Text(
+            'Delete',
+            style: TextStyle(color: Colors.black), // ✅ text color
+          ),
+        ],
+      ),
+      onTap: onDelete,
+    ),
+  ],
+),
+
               ],
             ),
             const SizedBox(height: 14),
