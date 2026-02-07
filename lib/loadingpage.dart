@@ -56,6 +56,9 @@ class _LanguageLoadingPageState extends State<LanguageLoadingPage>
       AppLanguage.tamil: 'தமிழ்',
       AppLanguage.english: 'English',
       AppLanguage.hindi: 'हिन्दी',
+      AppLanguage.telugu: 'తెలుగు',
+      AppLanguage.malayalam: 'മലയാളം',
+      AppLanguage.marathi: 'मराठी',
     }[lang]!;
 
     // ✅ LANGUAGE DESCRIPTION
@@ -67,6 +70,9 @@ class _LanguageLoadingPageState extends State<LanguageLoadingPage>
       AppLanguage.tamil: 'த',
       AppLanguage.english: 'E',
       AppLanguage.hindi: 'हि',
+      AppLanguage.telugu: 'త',
+      AppLanguage.malayalam: 'മ',
+      AppLanguage.marathi: 'म',
     }[lang]!;
 
     return Scaffold(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:symtom_checker/emergency_contact_page.dart';
 import 'package:symtom_checker/homepage.dart';
 import 'package:symtom_checker/message.dart';
+import 'package:symtom_checker/profile.dart';
 
 
 class SchedulePage extends StatefulWidget {
@@ -15,6 +18,102 @@ class _SchedulePageState extends State<SchedulePage> {
   int _selectedTabIndex = 0;
   int _selectedIndex = 3; // Schedule tab active
 
+  // Method to show emergency popup
+  void _showEmergencyPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(
+            'Emergency Services',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Ambulance Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                   /* Navigator.pop(context);
+                    // Call ambulance (you can change the number as needed)
+                    final Uri phoneUri = Uri(scheme: 'tel', path: '108');
+                    if (await canLaunchUrl(phoneUri)) {
+                      await launchUrl(phoneUri);
+                    } */
+                  },
+                  icon: Icon(FontAwesomeIcons.ambulance, size: 20),
+                  label: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      'Call Ambulance',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF1FA59E),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12),
+              // Emergency Contact Person Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    
+                  },
+                  icon: Icon(FontAwesomeIcons.userDoctor, size: 20),
+                  label: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      'Emergency Contact Person',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF1FA59E),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   // Sample appointment data
   final List<Map<String, dynamic>> upcomingAppointments = [
@@ -420,6 +519,12 @@ class _SchedulePageState extends State<SchedulePage> {
     showUnselectedLabels: false,
 
     onTap: (index) {
+      if (index == 2) {
+        // Phone button - show emergency popup
+        _showEmergencyPopup();
+        return;
+      }
+
       if (_selectedIndex == index) return;
 
       setState(() {
@@ -441,13 +546,6 @@ class _SchedulePageState extends State<SchedulePage> {
           );
           break;
 
-        case 2:
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const HealthcareHomePage()),
-          );
-          break;
-
         case 3:
           // Already on SchedulePage → do nothing
           break;
@@ -455,7 +553,7 @@ class _SchedulePageState extends State<SchedulePage> {
         case 4:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const HealthcareHomePage()),
+            MaterialPageRoute(builder: (_) => const ProfilePage()),
           );
           break;
       }
@@ -471,9 +569,48 @@ class _SchedulePageState extends State<SchedulePage> {
         label: '',
       ),
       BottomNavigationBarItem(
-        icon: _navIcon(FontAwesomeIcons.phone, 2),
-        label: '',
-      ),
+            icon: Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                color: _selectedIndex == 2
+                    ? const Color(0xFF1FA59E)
+                    : Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // 📞 Tilted call icon (TOP)
+                  Positioned(
+                    top: 8,
+                    child: Transform.rotate(
+                      angle: 2.4, // 👈 tilt here
+                      child: Icon(
+                        FontAwesomeIcons.phone,
+                        size: 28,
+                        color: _selectedIndex == 2 ? Colors.white : Colors.grey,
+                      ),
+                    ),
+                  ),
+
+                  // 🔴 e symbol (BOTTOM)
+                  Positioned(
+                    bottom: -12,
+                    child: Text(
+                      'e',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 39,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            label: '',
+          ),
       BottomNavigationBarItem(
         icon: _navIcon(FontAwesomeIcons.calendarAlt, 3),
         label: '',

@@ -178,6 +178,12 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
           AppState.selectedLanguage = AppLanguage.english;
         } else if (selectedLanguage == 'हिन्दी') {
           AppState.selectedLanguage = AppLanguage.hindi;
+        } else if (selectedLanguage == 'తెలుగు') {
+          AppState.selectedLanguage = AppLanguage.telugu;
+        } else if (selectedLanguage == 'മലയാളം') {
+          AppState.selectedLanguage = AppLanguage.malayalam;
+        } else if (selectedLanguage == 'मराठी') {
+          AppState.selectedLanguage = AppLanguage.marathi;
         }
 
         Navigator.push(

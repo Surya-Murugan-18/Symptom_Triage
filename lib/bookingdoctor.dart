@@ -37,7 +37,6 @@ class _BookingDoctorPageState extends State<BookingDoctorPage> {
   IconData selectedPaymentIcon = FontAwesomeIcons.ccVisa;
   Color selectedPaymentColor = Colors.black87;
 
-
   @override
   void initState() {
     super.initState();
@@ -103,10 +102,11 @@ class _BookingDoctorPageState extends State<BookingDoctorPage> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
-  selectedPaymentMethod = method['name'] as String;
-  selectedPaymentIcon = method['icon'] as IconData;
-  selectedPaymentColor = method['color'] as Color; // ✅ save color
-});
+                        selectedPaymentMethod = method['name'] as String;
+                        selectedPaymentIcon = method['icon'] as IconData;
+                        selectedPaymentColor =
+                            method['color'] as Color; // ✅ save color
+                      });
 
                       Navigator.of(context).pop();
                     },
@@ -135,27 +135,27 @@ class _BookingDoctorPageState extends State<BookingDoctorPage> {
                               border: Border.all(color: Colors.grey[200]!),
                             ),
                             child: Center(
-  child: FaIcon(
-    method['icon'] as IconData,
-    color: selectedPaymentMethod == method['name']
-        ? Color(0xFF17A697) // ✅ highlight when selected
-        : method['color'] as Color,
-    size: 20,
-  ),
-),
-
+                              child: FaIcon(
+                                method['icon'] as IconData,
+                                color: selectedPaymentMethod == method['name']
+                                    ? Color(
+                                        0xFF17A697,
+                                      ) // ✅ highlight when selected
+                                    : method['color'] as Color,
+                                size: 20,
+                              ),
+                            ),
                           ),
                           SizedBox(width: 16),
                           Text(
                             method['name'] as String,
-                           style: TextStyle(
-  fontSize: 16,
-  fontWeight: FontWeight.w500,
-  color: selectedPaymentMethod == method['name']
-      ? Color(0xFF17A697) // ✅ selected color
-      : Colors.black87,
-),
-
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: selectedPaymentMethod == method['name']
+                                  ? Color(0xFF17A697) // ✅ selected color
+                                  : Colors.black87,
+                            ),
                           ),
                           Spacer(),
                           if (selectedPaymentMethod == method['name'])
@@ -224,13 +224,13 @@ class _BookingDoctorPageState extends State<BookingDoctorPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  ChatDoctorScreen(),
-                              ),
-                            );
-                          },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatDoctorScreen(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF17A697),
                     padding: EdgeInsets.symmetric(vertical: 24),
@@ -362,19 +362,15 @@ class _BookingDoctorPageState extends State<BookingDoctorPage> {
 
               const SizedBox(height: 32),
 
-_buildSectionHeader(
-  'Date',
-  'Change',
-  () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DoctorDetailPage(), 
-        // ⬆️ replace with your actual page (date selection page)
-      ),
-    );
-  },
-),
+              _buildSectionHeader('Date', 'Change', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DoctorDetailPage(),
+                    // ⬆️ replace with your actual page (date selection page)
+                  ),
+                );
+              }),
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(14),
@@ -454,13 +450,8 @@ _buildSectionHeader(
                 '\$${adminFee.toStringAsFixed(2)}',
               ),
               const SizedBox(height: 12),
-_buildPaymentItem(
-  'Additional Discount',
-  '-',
-  isDiscount: true,
-),
+              _buildPaymentItem('Additional Discount', '-', isDiscount: true),
 
-              
               const SizedBox(height: 16),
 
               Row(
@@ -480,7 +471,7 @@ _buildPaymentItem(
                   ),
                 ],
               ),
- const Divider(),
+              const Divider(),
               const SizedBox(height: 12),
 
               _buildSectionHeader(
@@ -498,11 +489,11 @@ _buildPaymentItem(
                 ),
                 child: Row(
                   children: [
-FaIcon(
-  selectedPaymentIcon,
-  color: selectedPaymentColor, // ✅ USE STORED COLOR
-  size: 32,
-),
+                    FaIcon(
+                      selectedPaymentIcon,
+                      color: selectedPaymentColor, // ✅ USE STORED COLOR
+                      size: 32,
+                    ),
                     const SizedBox(width: 12),
                     Text(
                       selectedPaymentMethod,
@@ -522,7 +513,11 @@ FaIcon(
                       children: [
                         const Text(
                           'Total',
-                          style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -566,109 +561,112 @@ FaIcon(
     );
   }
 
-void _changeReason() {
-  final TextEditingController reasonController =
-      TextEditingController(text: selectedReason);
-  String? localError;
+  void _changeReason() {
+    final TextEditingController reasonController = TextEditingController(
+      text: selectedReason,
+    );
+    String? localError;
 
-  showDialog(
-    context: context,
-    builder: (context) => StatefulBuilder(
-      builder: (context, setLocalState) {
-        return Dialog(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          insetPadding: const EdgeInsets.all(16),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Enter Reason for Consultation',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                /// 🔹 INPUT BOX
-                TextField(
-                  controller: reasonController,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    hintText: 'Describe your reason...',
-                    hintStyle: TextStyle(color: Colors.grey[400]),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF17A697),
-                        width: 2,
-                      ),
-                    ),
-                    errorText: localError, // 🔴 inline error
-                    contentPadding: const EdgeInsets.all(16),
-                  ),
-                  style: const TextStyle(color: Colors.black87),
-                ),
-
-                const SizedBox(height: 24),
-
-                /// 🔹 DONE BUTTON
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (reasonController.text.trim().isEmpty) {
-                        setLocalState(() {
-                          localError = 'Please enter a reason';
-                        });
-                        return;
-                      }
-
-                      setState(() {
-                        selectedReason = reasonController.text.trim();
-                      });
-
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF17A697),
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(52),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: const Text(
-                      'Done',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setLocalState) {
+          return Dialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-          ),
-        );
-      },
-    ),
-  );
-}
+            insetPadding: const EdgeInsets.all(16),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Enter Reason for Consultation',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
 
+                  /// 🔹 INPUT BOX
+                  TextField(
+                    controller: reasonController,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      hintText: 'Describe your reason...',
+                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF17A697),
+                          width: 2,
+                        ),
+                      ),
+                      errorText: localError, // 🔴 inline error
+                      contentPadding: const EdgeInsets.all(16),
+                    ),
+                    style: const TextStyle(color: Colors.black87),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  /// 🔹 DONE BUTTON
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (reasonController.text.trim().isEmpty) {
+                          setLocalState(() {
+                            localError = 'Please enter a reason';
+                          });
+                          return;
+                        }
+
+                        setState(() {
+                          selectedReason = reasonController.text.trim();
+                        });
+
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF17A697),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 0,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(52),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        'Done',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   Widget _buildSectionHeader(
     String title,
@@ -687,22 +685,26 @@ void _changeReason() {
           ),
         ),
         TextButton(
-  onPressed: onPressed,
-  style: TextButton.styleFrom(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    backgroundColor: Colors.transparent,
-    overlayColor: const Color.fromARGB(255, 9, 86, 78), // ✅ hover / press color
-  ),
-  child: Text(
-    buttonText,
-    style: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: Colors.grey[600],
-    ),
-  ),
-),
-
+          onPressed: onPressed,
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            backgroundColor: Colors.transparent,
+            overlayColor: const Color.fromARGB(
+              255,
+              9,
+              86,
+              78,
+            ), // ✅ hover / press color
+          ),
+          child: Text(
+            buttonText,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[600],
+            ),
+          ),
+        ),
       ],
     );
   }

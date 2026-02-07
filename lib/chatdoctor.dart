@@ -294,26 +294,28 @@ class _ChatDoctorScreenState extends State<ChatDoctorScreen> {
           tooltip: 'Voice Call',
         ),
         PopupMenuButton<String>(
-          onSelected: (String result) {
-            if (result == 'info') {
-              // Handle doctor info
-            }
-          },
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-            const PopupMenuItem<String>(
-              value: 'info',
-              child: Text('Doctor Info'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'report',
-              child: Text('Reports'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'end',
-              child: Text('End Consultation'),
-            ),
-          ],
-        ),
+  color: const Color.fromARGB(255, 248, 248, 248), // 👈 background color
+  onSelected: (String result) {
+    if (result == 'info') {
+      // Handle doctor info
+    }
+  },
+  itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+    const PopupMenuItem<String>(
+      value: 'info',
+      child: Text('Doctor Info'),
+    ),
+    const PopupMenuItem<String>(
+      value: 'report',
+      child: Text('Reports'),
+    ),
+    const PopupMenuItem<String>(
+      value: 'end',
+      child: Text('End Consultation'),
+    ),
+  ],
+),
+
       ],
     );
   }

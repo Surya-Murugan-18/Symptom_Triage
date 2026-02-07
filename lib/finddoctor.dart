@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:symtom_checker/doctordetail.dart';
+import 'package:symtom_checker/top_doctor.dart';
 
 class FindDoctorsPage extends StatefulWidget {
   const FindDoctorsPage({super.key});
@@ -47,7 +48,6 @@ class _FindDoctorsPageState extends State<FindDoctorsPage> {
       rating: 4.4,
       distanceText: '3.1km away',
       imageUrl: 'assets/D4.png',
-      
     ),
   ];
 
@@ -129,7 +129,16 @@ class _FindDoctorsPageState extends State<FindDoctorsPage> {
                     _CategoryGrid(
                       items: _categories,
                       isDesktop: isDesktop,
-                      onPressed: (item) {},
+                      onPressed: (item) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TopDoctorPage(
+                              specialty: item.label,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 24),
                     const Text(
@@ -154,7 +163,20 @@ class _FindDoctorsPageState extends State<FindDoctorsPage> {
                     const SizedBox(height: 12),
                     _RecentDoctorsRow(
                       doctors: _allDoctors,
-                      onPressed: (doctor) {},
+                      onPressed: (doctor) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorDetailPage(
+                              doctorName: doctor.name,
+                              speciality: doctor.specialty,
+                              rating: doctor.rating,
+                              distanceText: doctor.distanceText,
+                              photoUrl: doctor.imageUrl,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
                     Center(
@@ -209,14 +231,17 @@ class _FindDoctorsPageState extends State<FindDoctorsPage> {
     }
 
     return filtered
-        .map((d) => _RecommendedCard(doctor: d, onPressed: () {
-          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  DoctorDetailPage(),
-                              ),
-                            );
-        }))
+        .map(
+          (d) => _RecommendedCard(
+            doctor: d,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorDetailPage()),
+              );
+            },
+          ),
+        )
         .toList();
   }
 }

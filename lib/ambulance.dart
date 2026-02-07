@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+
 import 'dart:async';
 
 class AmbulancePage extends StatefulWidget {
@@ -10,15 +12,17 @@ class AmbulancePage extends StatefulWidget {
 }
 
 class _AmbulancePageState extends State<AmbulancePage> {
-  GoogleMapController? _mapController;
+final MapController _mapController = MapController();
+
   final TextEditingController _searchController = TextEditingController();
   
   // Default location (Alexandria, Virginia)
   final LatLng _currentLocation = const LatLng(13.0105, 80.1234);
   final String _address = "Sairam Campus , Sai leo Nagar , West Tambaram, Chennai - 600045";
   
-  Set<Marker> _markers = {};
-  Set<Circle> _circles = {};
+List<Marker> _markers = [];
+List<CircleMarker> _circles = [];
+
 
   @override
   void initState() {
@@ -27,56 +31,70 @@ class _AmbulancePageState extends State<AmbulancePage> {
   }
 
   void _initializeMapElements() {
-    // Add current location marker
-    _markers.add(
-      Marker(
-        markerId: const MarkerId('current_location'),
-        position: _currentLocation,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-        infoWindow: const InfoWindow(title: 'Your Location'),
-      ),
-    );
+  // Clear old data (important if rebuild happens)
+  _markers.clear();
+  _circles.clear();
 
-    // Add nearby hospital markers
-    _markers.add(
-      Marker(
-        markerId: const MarkerId('hospital_1'),
-        position: const LatLng(38.8098, -77.0419),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-        infoWindow: const InfoWindow(title: 'Hospital'),
+  // 📍 Current location marker
+  _markers.add(
+    Marker(
+      point: _currentLocation,
+      width: 40,
+      height: 40,
+      child: const Icon(
+        Icons.my_location,
+        color: Colors.teal,
+        size: 36,
       ),
-    );
+    ),
+  );
 
-    _markers.add(
-      Marker(
-        markerId: const MarkerId('hospital_2'),
-        position: const LatLng(38.7998, -77.0519),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-        infoWindow: const InfoWindow(title: 'Hospital'),
+  // 🏥 Nearby hospital 1
+  _markers.add(
+    Marker(
+      point: const LatLng(13.0120, 80.1210),
+      width: 40,
+      height: 40,
+      child: const Icon(
+        Icons.local_hospital,
+        color: Colors.red,
+        size: 36,
       ),
-    );
+    ),
+  );
 
-    // Add radius circle
-    _circles.add(
-      Circle(
-        circleId: const CircleId('search_radius'),
-        center: _currentLocation,
-        radius: 1500, // 1.5km radius
-        strokeColor: const Color(0xFF00BFA5).withOpacity(0.5),
-        strokeWidth: 2,
-        fillColor: const Color(0xFF00BFA5).withOpacity(0.1),
+  // 🏥 Nearby hospital 2
+  _markers.add(
+    Marker(
+      point: const LatLng(13.0085, 80.1255),
+      width: 40,
+      height: 40,
+      child: const Icon(
+        Icons.local_hospital,
+        color: Colors.red,
+        size: 36,
       ),
-    );
-  }
+    ),
+  );
 
-  void _onMapCreated(GoogleMapController controller) {
-    _mapController = controller;
-  }
+  // 🔵 Radius circle (1.5 km)
+  _circles.add(
+    CircleMarker(
+      point: _currentLocation,
+      radius: 1500, // meters
+      color: const Color(0xFF00BFA5).withOpacity(0.15),
+      borderStrokeWidth: 2,
+      borderColor: const Color(0xFF00BFA5),
+    ),
+  );
+}
+
+
 
   @override
   void dispose() {
     _searchController.dispose();
-    _mapController?.dispose();
+    
     super.dispose();
   }
 
@@ -99,19 +117,24 @@ class _AmbulancePageState extends State<AmbulancePage> {
               child: Stack(
                 children: [
                   // Google Map
-                  GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: _currentLocation,
-                      zoom: 14.0,
-                    ),
-                    markers: _markers,
-                    circles: _circles,
-                    myLocationButtonEnabled: false,
-                    zoomControlsEnabled: false,
-                    mapToolbarEnabled: false,
-                    compassEnabled: false,
-                  ),
+                FlutterMap(
+  mapController: _mapController,
+  options: MapOptions(
+    initialCenter: _currentLocation,
+    initialZoom: 14,
+  ),
+  children: [
+    TileLayer(
+      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      userAgentPackageName: 'com.example.symtom_checker',
+    ),
+    MarkerLayer(markers: _markers),
+    CircleLayer(circles: _circles),
+  ],
+),
+
+
+
                   
                   // Search Bar Overlay
                   Positioned(
@@ -149,33 +172,35 @@ class _AmbulancePageState extends State<AmbulancePage> {
         ],
       ),
       child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 20,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                'Ambulance',
-                style: TextStyle(
-                  fontSize: isDesktop ? 22 : 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 36), // Balance the back button
-        ],
+  children: [
+    IconButton(
+      onPressed: () {
+        Navigator.pop(context); // 👈 back action
+      },
+      icon: const Icon(
+        Icons.arrow_back_ios,
+        color: Colors.black,
+        size: 20,
       ),
+      splashRadius: 22, // nice touch effect
+     
+    ),
+    Expanded(
+      child: Center(
+        child: Text(
+          'Ambulance',
+          style: TextStyle(
+            fontSize: isDesktop ? 22 : 22,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+      ),
+    ),
+    const SizedBox(width: 48), // balance IconButton width
+  ],
+),
+
     );
   }
 
@@ -345,6 +370,7 @@ class _AmbulancePageState extends State<AmbulancePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),

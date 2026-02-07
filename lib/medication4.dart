@@ -23,6 +23,13 @@ String _formatTime(TimeOfDay time) {
     final period = time.period == DayPeriod.am ? 'AM' : 'PM';
     return '$hour:$minute $period';
   }
+
+  bool _isToday(DateTime date) {
+    final today = DateTime.now();
+    return date.year == today.year && 
+           date.month == today.month && 
+           date.day == today.day;
+  }
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
@@ -294,47 +301,72 @@ const SizedBox(height: 32),
     child: Column(
       children: [
         // ───── Start Date Row ─────
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.calendar_today,
-                color: Colors.grey,
-                size: 20,
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'Start Date',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+        GestureDetector(
+          onTap: () async {
+            final DateTime? picked = await showDatePicker(
+              context: context,
+              initialDate: selectedDate,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+              builder: (context, child) {
+                return Theme(
+                  data: Theme.of(context).copyWith(
+                    useMaterial3: true,
+                    colorScheme: const ColorScheme.light(
+                      primary: Color(0xFF00897B), // ✔ same green
+                      onPrimary: Colors.white,
+                      surface: Colors.white,
+                      onSurface: Colors.black87,
+                    ),
+                    datePickerTheme: DatePickerThemeData(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      headerBackgroundColor: Color(0xFF00897B),
+                      headerForegroundColor: Colors.white,
+                      todayBorder: BorderSide(color: Color(0xFF00897B)),
+                    ),
+                  ),
+                  child: child!,
+                );
+              },
+            );
+
+            if (picked != null) {
+              setState(() => selectedDate = picked);
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.calendar_today,
+                  color: Colors.grey,
+                  size: 20,
                 ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () async {
-                  final DateTime? picked = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-                  if (picked != null) {
-                    setState(() => selectedDate = picked);
-                  }
-                },
-                child: const Text(
-                  'Today',
+                const SizedBox(width: 12),
+                const Text(
+                  'Start Date',
                   style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  _isToday(selectedDate) 
+                      ? 'Today' 
+                      : '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 

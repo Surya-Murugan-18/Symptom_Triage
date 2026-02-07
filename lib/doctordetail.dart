@@ -45,6 +45,25 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
     '08:00 PM',
   ];
 
+  String _getAboutText(String specialty) {
+    final Map<String, String> aboutTexts = {
+      'Cardiologist': 'A Cardiologist specializes in diagnosing and treating heart and blood vessel conditions, including high blood pressure, heart disease, and rhythm disorders. They focus on prevention, early detection and long-term care to maintain overall heart health.',
+      'Psychologist': 'A Psychologist specializes in mental health and behavioral conditions. They provide therapy, counseling and psychological assessments to help patients manage stress, anxiety, depression and other mental health concerns. They work to improve emotional well-being and quality of life.',
+      'Psychiatrist': 'A Psychiatrist specializes in mental health and behavioral conditions. They provide therapy, counseling and psychological assessments to help patients manage stress, anxiety, depression and other mental health concerns. They work to improve emotional well-being and quality of life.',
+      'Orthopedist': 'An Orthopedist specializes in diagnosing and treating diseases and injuries of the bones, joints, ligaments and muscles. They provide treatment ranging from conservative management to surgical interventions. They focus on restoring mobility and function to improve patient quality of life.',
+      'Neurologist': 'A Neurologist specializes in diagnosing and treating disorders of the nervous system, including brain, spinal cord, and peripheral nerves. They treat conditions such as epilepsy, Parkinson\'s disease, Alzheimer\'s, and stroke. They focus on understanding and managing neurological conditions.',
+      'Dermatologist': 'A Dermatologist specializes in diagnosing and treating skin, hair, and nail conditions. They provide treatment for various skin disorders, perform cosmetic procedures, and help patients maintain healthy skin. They use both medical and surgical approaches to address dermatological issues.',
+      'Pediatrician': 'A Pediatrician specializes in the medical care of infants, children, and adolescents. They provide preventive care, vaccinations, and treatment for childhood illnesses and development issues. They focus on ensuring children\'s healthy growth and development.',
+      'Dentist': 'A Dentist specializes in diagnosing, treating, and preventing diseases and conditions of the teeth, gums, and mouth. They perform cleanings, fillings, root canals, and other procedures to maintain oral health. They focus on preventive care and aesthetic dentistry.',
+      'General': 'A General Practitioner provides comprehensive medical care for patients of all ages. They diagnose and treat common illnesses, provide preventive care, and manage chronic diseases. They serve as the first point of contact for healthcare needs and refer patients to specialists when necessary.',
+      'Lungs Specialist': 'A Lungs Specialist (Pulmonologist) specializes in diagnosing and treating diseases of the respiratory system, including the lungs, airways, and breathing. They treat conditions such as asthma, COPD, pneumonia, and lung cancer. They focus on improving respiratory function and quality of life.',
+      'Surgeon': 'A Surgeon specializes in performing surgical procedures to treat diseases, injuries, and deformities. They have advanced training in various surgical techniques and use both traditional and minimally invasive methods. They focus on providing safe and effective surgical care.',
+      'Covid-19': 'A COVID-19 Specialist provides expert care for patients affected by the coronavirus. They specialize in diagnosis, treatment, and management of COVID-19 infections, including severe cases. They focus on preventing transmission and supporting patients through recovery.',
+    };
+
+    return aboutTexts[specialty] ?? 'An experienced medical professional dedicated to providing high-quality healthcare services and personalized treatment plans.';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -199,9 +218,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const ReadMoreText(
-                      text:
-                          'A Cardiologist specializes in diagnosing and treating heart and blood vessel conditions, including high blood pressure, heart disease, and rhythm disorders.They focus on prevention, early detection, and long-term care to maintain overall heart health.',
+                    ReadMoreText(
+                      text: _getAboutText(widget.speciality),
                     ),
 
                     const SizedBox(height: 24),

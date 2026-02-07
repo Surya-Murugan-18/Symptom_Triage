@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:symtom_checker/chatdoctor.dart';
+import 'package:symtom_checker/emergency_contact_page.dart';
 import 'package:symtom_checker/homepage.dart';
+import 'package:symtom_checker/profile.dart';
 import 'package:symtom_checker/schedule.dart';
 
 class Message extends StatefulWidget {
@@ -14,6 +18,103 @@ class _MessageState extends State<Message> {
   int _selectedTab = 0;
   int _selectedBottomNav = 1;
   int _selectedIndex = 1; // Schedule tab active
+
+  // Method to show emergency popup
+  void _showEmergencyPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(
+            'Emergency Services',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Ambulance Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                  /*  Navigator.pop(context);
+                    // Call ambulance (you can change the number as needed)
+                    final Uri phoneUri = Uri(scheme: 'tel', path: '108');
+                    if (await canLaunchUrl(phoneUri)) {
+                      await launchUrl(phoneUri);
+                    } */
+                  },
+                  icon: Icon(FontAwesomeIcons.ambulance, size: 20),
+                  label: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      'Call Ambulance',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF1FA59E),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12),
+              // Emergency Contact Person Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    
+                  },
+                  icon: Icon(FontAwesomeIcons.userDoctor, size: 20),
+                  label: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      'Emergency Contact Person',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF1FA59E),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   final List<MessageData> messageList = [
     MessageData(
@@ -92,12 +193,12 @@ class _MessageState extends State<Message> {
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: isMobile ? 16.0 : 24.0,
-                vertical: 12.0,
+                vertical: 2.0,
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
+                /*  children: [
                     _buildTab(
                       label: 'All',
                       index: 0,
@@ -115,7 +216,7 @@ class _MessageState extends State<Message> {
                       index: 2,
                       isActive: _selectedTab == 2,
                     ),
-                  ],
+                  ], */
                 ),
               ),
             ),
@@ -143,7 +244,10 @@ class _MessageState extends State<Message> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+
+          
+        },
         backgroundColor: const Color(0xFF1ABFB8),
         child: const FaIcon(
           FontAwesomeIcons.commentDots,
@@ -188,7 +292,15 @@ class _MessageState extends State<Message> {
     return Padding(
       padding: EdgeInsets.only(bottom: isMobile ? 12 : 16),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+
+          Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatDoctorScreen(),
+                      ),
+                    );
+        },
         borderRadius: BorderRadius.circular(12),
         child: Row(
           children: [
@@ -289,6 +401,12 @@ class _MessageState extends State<Message> {
       showUnselectedLabels: false,
 
       onTap: (index) {
+        if (index == 2) {
+          // Phone button - show emergency popup
+          _showEmergencyPopup();
+          return;
+        }
+
         if (_selectedIndex == index) return;
 
         setState(() {
@@ -306,13 +424,6 @@ class _MessageState extends State<Message> {
           case 1:
             break;
 
-          case 2:
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const HealthcareHomePage()),
-            );
-            break;
-
           case 3:
             Navigator.push(
               context,
@@ -323,7 +434,7 @@ class _MessageState extends State<Message> {
           case 4:
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const HealthcareHomePage()),
+              MaterialPageRoute(builder: (_) => const ProfilePage()),
             );
             break;
         }
@@ -339,9 +450,48 @@ class _MessageState extends State<Message> {
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: _navIcon(FontAwesomeIcons.phone, 2),
-          label: '',
-        ),
+            icon: Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                color: _selectedIndex == 2
+                    ? const Color(0xFF1FA59E)
+                    : Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // 📞 Tilted call icon (TOP)
+                  Positioned(
+                    top: 8,
+                    child: Transform.rotate(
+                      angle: 2.4, // 👈 tilt here
+                      child: Icon(
+                        FontAwesomeIcons.phone,
+                        size: 28,
+                        color: _selectedIndex == 2 ? Colors.white : Colors.grey,
+                      ),
+                    ),
+                  ),
+
+                  // 🔴 e symbol (BOTTOM)
+                  Positioned(
+                    bottom: -12,
+                    child: Text(
+                      'e',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 39,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            label: '',
+          ),
         BottomNavigationBarItem(
           icon: _navIcon(FontAwesomeIcons.calendarAlt, 3),
           label: '',

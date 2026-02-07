@@ -31,14 +31,16 @@ dependencies:
   flutter:
     sdk: flutter
   font_awesome_flutter: ^10.7.0
-  geolocator: ^10.0.0
-  geocoding: ^2.0.0
-  google_maps_flutter: ^2.14.0
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
   intl: ^0.20.2
-  file_picker: ^8.0.0
+  file_picker: ^10.3.10
   agora_rtc_engine: ^6.3.0
-  permission_handler: ^11.4.0
+  permission_handler: ^12.0.1
   lucide_icons_flutter: ^3.1.9
+  url_launcher: ^6.1.14
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -51,7 +53,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -88,6 +90,19 @@ flutter:
    -  assets/D4.png
    -  assets/D5.png
    -  assets/D6.jpg
+   -  assets/D7.png
+   -  assets/D8.jpg
+   -  assets/D9.png
+   -  assets/D10.png
+   -  assets/D11.png
+   -  assets/D12.png
+   -  assets/D13.png
+   -  assets/D14.png
+   -  assets/D15.png
+   -  assets/D16.png
+   -  assets/D17.png
+   -  assets/D18.png
+   -  assets/D19.png
    -  assets/med.jpeg
    -  assets/P1.png
    -  assets/P2.png

@@ -1,1 +1,3 @@
-enum AppLanguage { tamil, english, hindi }
+enum AppLanguage { tamil, english, hindi,telugu,
+  malayalam,
+  marathi, }
