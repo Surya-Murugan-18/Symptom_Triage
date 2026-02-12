@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:symtom_checker/doctor_consultaions.dart';
+import 'package:symtom_checker/doctor_consultaions.dart' hide ConsultationDetailsPage;
+import 'package:symtom_checker/doctor_consult_view_details.dart';
 
 class ActiveConsultationsPage extends StatefulWidget {
   const ActiveConsultationsPage({Key? key}) : super(key: key);
@@ -32,6 +33,10 @@ class _ActiveConsultationsPageState extends State<ActiveConsultationsPage> {
         status: 'In Progress',
         statusColor: const Color(0xFFE8F4F8),
         statusTextColor: const Color(0xFF2196F3),
+        location: 'Mumbai, Maharashtra',
+        appointmentTime: '10:30 AM',
+        symptomContext: 'Patient reports persistent headaches (7 days), mild fever, and fatigue. No history of migraines. BP normal.',
+        initials: 'SJ',
       ),
       ConsultationData(
         name: 'Raj Patel',
@@ -42,20 +47,39 @@ class _ActiveConsultationsPageState extends State<ActiveConsultationsPage> {
         status: 'Payment Completed',
         statusColor: const Color(0xFFE8F5E9),
         statusTextColor: const Color(0xFF4CAF50),
+        location: 'Delhi, India',
+        appointmentTime: '11:00 AM',
+        symptomContext: 'Patient experiencing back pain for 2 weeks. No recent injuries. General health good.',
+        initials: 'RP',
       ),
     ];
   }
 
   void _handleStartConsultation(String patientName) {
     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ConsultationDetailsPage()),
-                      );
-    
+      context,
+      MaterialPageRoute(builder: (context) => ConsultationDetailsPage()),
+    );
   }
 
-  void _handleViewDetails(String patientName) {
-    
+  void _handleViewDetails(ConsultationData consultation) {
+    final detailsData = ConsultationDetailsData(
+      name: consultation.name,
+      age: consultation.age,
+      gender: consultation.gender,
+      location: consultation.location,
+      appointmentTime: consultation.appointmentTime,
+      symptomContext: consultation.symptomContext,
+      initials: consultation.initials,
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ConsultationDetailsPage(
+          consultationData: detailsData,
+        ),
+      ),
+    );
   }
 
   void _handleBackButton() {
@@ -66,7 +90,8 @@ class _ActiveConsultationsPageState extends State<ActiveConsultationsPage> {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
     final isTablet =
-        MediaQuery.of(context).size.width >= 600 && MediaQuery.of(context).size.width < 1024;
+        MediaQuery.of(context).size.width >= 600 &&
+        MediaQuery.of(context).size.width < 1024;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -90,7 +115,11 @@ class _ActiveConsultationsPageState extends State<ActiveConsultationsPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 16 : isTablet ? 24 : 32,
+            horizontal: isMobile
+                ? 16
+                : isTablet
+                ? 24
+                : 32,
             vertical: isMobile ? 16 : 24,
           ),
           child: Column(
@@ -106,7 +135,7 @@ class _ActiveConsultationsPageState extends State<ActiveConsultationsPage> {
                     onStartPressed: () =>
                         _handleStartConsultation(consultations[index].name),
                     onDetailsPressed: () =>
-                        _handleViewDetails(consultations[index].name),
+                        _handleViewDetails(consultations[index]),
                   );
                 },
               ),
@@ -184,8 +213,10 @@ class _ConsultationCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: consultation.statusColor,
                     borderRadius: BorderRadius.circular(20),
@@ -205,31 +236,30 @@ class _ConsultationCard extends StatelessWidget {
             // Time and Tag Row
             Row(
               children: [
-                FaIcon(FontAwesomeIcons.clock,
-                    size: 16, color: Colors.grey.shade600),
+                FaIcon(
+                  FontAwesomeIcons.clock,
+                  size: 16,
+                  color: Colors.grey.shade600,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   consultation.time,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                 ),
                 const SizedBox(width: 16),
                 if (consultation.tag != null)
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       consultation.tag!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ),
               ],
@@ -258,9 +288,7 @@ class _ConsultationCard extends StatelessWidget {
           backgroundColor: appColor,
           foregroundColor: Colors.white,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -269,10 +297,7 @@ class _ConsultationCard extends StatelessWidget {
             const SizedBox(width: 8),
             const Text(
               'Start',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -287,15 +312,12 @@ class _ConsultationCard extends StatelessWidget {
         onPressed: onDetailsPressed,
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: Colors.grey.shade300, width: 1.5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FaIcon(FontAwesomeIcons.eye,
-                size: 16, color: Colors.grey.shade700),
+            FaIcon(FontAwesomeIcons.eye, size: 16, color: Colors.grey.shade700),
             const SizedBox(width: 8),
             Text(
               'Details',
@@ -322,6 +344,10 @@ class ConsultationData {
   final String status;
   final Color statusColor;
   final Color statusTextColor;
+  final String location;
+  final String appointmentTime;
+  final String symptomContext;
+  final String initials;
 
   ConsultationData({
     required this.name,
@@ -332,5 +358,9 @@ class ConsultationData {
     required this.status,
     required this.statusColor,
     required this.statusTextColor,
+    required this.location,
+    required this.appointmentTime,
+    required this.symptomContext,
+    required this.initials,
   });
 }

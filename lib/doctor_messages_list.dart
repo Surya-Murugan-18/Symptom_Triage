@@ -315,7 +315,10 @@ class _DoctorMessagesListState extends State<DoctorMessagesList> {
             break;
 
           case 1:
-            
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorMessagesList()),
+          );
             break;
 
           case 2:

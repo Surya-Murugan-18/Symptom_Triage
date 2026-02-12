@@ -348,7 +348,7 @@ class _DoctorNotificationsState extends State<DoctorNotifications> {
           _buildNavItem(FontAwesomeIcons.house, 'Home', 0),
           _buildNavItem(FontAwesomeIcons.envelope, 'Messages', 1),
           _buildNavItem(LucideIcons.messageSquare, 'Consults', 2),
-          _buildNavItem(FontAwesomeIcons.bell, 'Alerts', 3),
+          _buildNavItem(FontAwesomeIcons.bell, 'Notifications', 3),
           _buildNavItem(FontAwesomeIcons.user, 'Profile', 4),
         ],
       ),
@@ -387,7 +387,11 @@ class _DoctorNotificationsState extends State<DoctorNotifications> {
             break;
 
           case 3:
-            // Already on Notifications
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const DoctorNotifications()),
+          );
             break;
 
           case 4:

@@ -152,7 +152,7 @@ class _UserRolePageState extends State<UserRolePage> {
 
                   SizedBox(height: isMobile ? 16 : 20),
 
-                  _buildRoleCard(
+                /*  _buildRoleCard(
                     icon: Icons.business,
                     title: strings['role_org']!,
                     subtitle: strings['role_org_desc']!,
@@ -161,17 +161,17 @@ class _UserRolePageState extends State<UserRolePage> {
                       setState(() => selectedRole = 'organization');
                     },
                     isMobile: isMobile,
-                  ),
+                  ), */
                 ],
               ),
 
-              SizedBox(height: isMobile ? 48 : 64),
+              SizedBox(height: isMobile ? 28 : 64),
 
               // Footer
               Text(
                 strings['terms_privacy']!,
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 14,
                   color: Colors.grey[600],
                 ),
                 textAlign: TextAlign.center,

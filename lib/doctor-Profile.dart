@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:symtom_checker/doctor_consult.dart';
+import 'package:symtom_checker/doctor_dashboard.dart';
 import 'package:symtom_checker/doctor_messages_list.dart';
+import 'package:symtom_checker/doctor_notifications.dart';
 
 class DoctorProfile extends StatefulWidget {
   const DoctorProfile({Key? key}) : super(key: key);
@@ -333,24 +336,37 @@ class _DoctorProfileState extends State<DoctorProfile> {
           case 0:
             Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const DoctorMessagesList()),
+            MaterialPageRoute(builder: (context) => const DoctorDashboard()),
           );
             break;
 
           case 1:
-            // Navigate to Messages
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorMessagesList()),
+          );
             break;
 
           case 2:
-            // Navigate to Consults
+           Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DoctorConsult()),
+          );
             break;
 
           case 3:
-            // Navigate to Notifications
+           Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const DoctorNotifications()),
+          );
             break;
 
           case 4:
-            // Already on Profile
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorProfile()),
+          );
             break;
         }
       },

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'doctor_modify_slot.dart';
 
 class BookingRequestsPage extends StatefulWidget {
   const BookingRequestsPage({Key? key}) : super(key: key);
@@ -8,6 +10,11 @@ class BookingRequestsPage extends StatefulWidget {
 }
 
 class _BookingRequestsPageState extends State<BookingRequestsPage> {
+  // Lists to track appointment statuses
+  List<BookingRequest> pendingAppointments = [];
+  List<BookingRequest> acceptedAppointments = [];
+  List<BookingRequest> rejectedAppointments = [];
+
   final List<BookingRequest> bookingRequests = [
     BookingRequest(
       id: '1',
@@ -37,16 +44,205 @@ class _BookingRequestsPageState extends State<BookingRequestsPage> {
     ),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize all appointments as pending
+    pendingAppointments = List.from(bookingRequests);
+  }
+
   void _handleAccept(BookingRequest request) {
-    // Handle accept action
+    _showAcceptDialog(request);
+  }
+
+  void _showAcceptDialog(BookingRequest request) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text(
+            'Accept Appointment?',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
+          ),
+          content: const Text(
+            'Confirm this appointment for the requested time.',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF666666),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Color(0xFF9E9E9E),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showAppointmentAcceptedPopup(request);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF199A8E),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                'Confirm',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAppointmentAcceptedPopup(BookingRequest request) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return _AppointmentSuccessPopup(
+          title: 'Appointment Accepted',
+          icon: FontAwesomeIcons.circleCheck,
+          iconColor: const Color(0xFF4CAF50),
+          backgroundColor: const Color(0xFFE8F5E9),
+          onClose: () {
+            Navigator.pop(context);
+            setState(() {
+              pendingAppointments.remove(request);
+              acceptedAppointments.add(request);
+            });
+          },
+        );
+      },
+    );
   }
 
   void _handleReject(BookingRequest request) {
-    // Handle reject action
+    _showRejectDialog(request);
+  }
+
+  void _showRejectDialog(BookingRequest request) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text(
+            'Reject Request?',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
+          ),
+          content: const Text(
+            'Are you sure you want to reject this booking request?',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF666666),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Color(0xFF9E9E9E),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showRequestRejectedPopup(request);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFE53935),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                'Reject',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showRequestRejectedPopup(BookingRequest request) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return _AppointmentSuccessPopup(
+          title: 'Request Rejected',
+          icon: FontAwesomeIcons.circleXmark,
+          iconColor: const Color(0xFFE53935),
+          backgroundColor: const Color(0xFFFFEBEE),
+          onClose: () {
+            Navigator.pop(context);
+            setState(() {
+              pendingAppointments.remove(request);
+              rejectedAppointments.add(request);
+            });
+          },
+        );
+      },
+    );
   }
 
   void _handleModify(BookingRequest request) {
-    // Handle modify action
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DoctorModifySlot(
+          patientName: request.patientName,
+          initials: request.initials,
+          currentDateTime: request.dateTime,
+        ),
+      ),
+    ).then((_) {
+      // After returning from modify slot, update status to pending
+      setState(() {
+        // Request remains in pending list as it's waiting for patient confirmation
+      });
+    });
   }
 
   @override
@@ -418,6 +614,115 @@ class _ModifyButton extends StatelessWidget {
       child: const Text(
         'Modify',
         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+}
+// Success Popup Widget
+class _AppointmentSuccessPopup extends StatefulWidget {
+  final String title;
+  final IconData icon;
+  final Color iconColor;
+  final Color backgroundColor;
+  final VoidCallback onClose;
+
+  const _AppointmentSuccessPopup({
+    required this.title,
+    required this.icon,
+    required this.iconColor,
+    required this.backgroundColor,
+    required this.onClose,
+  });
+
+  @override
+  State<_AppointmentSuccessPopup> createState() =>
+      _AppointmentSuccessPopupState();
+}
+
+class _AppointmentSuccessPopupState extends State<_AppointmentSuccessPopup>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
+
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
+    _animationController.forward();
+
+    // Auto-close after 2 seconds
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        widget.onClose();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      backgroundColor: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ScaleTransition(
+              scale: _scaleAnimation,
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: widget.backgroundColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: FaIcon(
+                    widget.icon,
+                    color: widget.iconColor,
+                    size: 40,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            FadeTransition(
+              opacity: _opacityAnimation,
+              child: Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

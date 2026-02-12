@@ -124,7 +124,7 @@ class AppStrings {
       'app_subtitle': 'அறிகுறி மதிப்பீடு மற்றும் சிகிச்சை வழிகாட்டல்',
       'continue_as': 'தொடரவும்',
 
-      'role_patient': 'நோயாளர்',
+      'role_patient': 'பயனர்',
       'role_patient_desc': 'அறிகுறி வழிகாட்டலைப் பெறுங்கள்',
 
       'role_doctor': 'மருத்துவர்',
@@ -303,7 +303,7 @@ class AppStrings {
       'app_subtitle': 'Symptom Triage & Care Navigation',
       'continue_as': 'Continue as',
 
-      'role_patient': 'Patient',
+      'role_patient': 'User',
       'role_patient_desc': 'Get symptom guidance',
 
       'role_doctor': 'Doctor',
@@ -500,7 +500,7 @@ AppLanguage.marathi: {
   'app_subtitle': 'लक्षणांचे मूल्यांकन व उपचार मार्गदर्शन',
   'continue_as': 'म्हणून पुढे चला',
 
-  'role_patient': 'रुग्ण',
+  'role_patient': 'वापरकर्ता',
   'role_patient_desc': 'लक्षणांचे मार्गदर्शन मिळवा',
 
   'role_doctor': 'डॉक्टर',
@@ -693,7 +693,7 @@ AppLanguage.malayalam: {
   'app_subtitle': 'ലക്ഷണ നിർണയം & പരിചരണ മാർഗനിർദേശം',
   'continue_as': 'തുടരുക',
 
-  'role_patient': 'രോഗി',
+  'role_patient': 'ഉപയോക്താവ്',
   'role_patient_desc': 'ലക്ഷണ മാർഗനിർദേശം നേടുക',
 
   'role_doctor': 'ഡോക്ടർ',
@@ -883,7 +883,7 @@ AppLanguage.telugu: {
   'app_subtitle': 'లక్షణాల అంచనా & సంరక్షణ మార్గదర్శకం',
   'continue_as': 'ఈ విధంగా కొనసాగండి',
 
-  'role_patient': 'రోగి',
+  'role_patient': 'వినియోగదారు',
   'role_patient_desc': 'లక్షణాల మార్గదర్శకం పొందండి',
 
   'role_doctor': 'డాక్టర్',
@@ -1081,7 +1081,7 @@ AppLanguage.telugu: {
       'app_subtitle': 'लक्षण जांच और उपचार मार्गदर्शन',
       'continue_as': 'आगे बढ़ें',
 
-      'role_patient': 'रोगी',
+      'role_patient': 'उपयोगकर्ता',
       'role_patient_desc': 'लक्षण मार्गदर्शन प्राप्त करें',
 
       'role_doctor': 'डॉक्टर',

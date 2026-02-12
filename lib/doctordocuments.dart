@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:symtom_checker/documentsverification.dart';
+import 'package:symtom_checker/doctor_verification_progress.dart';
 
 class DoctorDocuments extends StatefulWidget {
   const DoctorDocuments({Key? key}) : super(key: key);
@@ -28,6 +29,17 @@ class _DoctorDocumentsState extends State<DoctorDocuments> {
   String? councilRegistrationFileName;
   String? governmentIDFileName;
   String? specializationFileName;
+
+  // Text controllers for input fields
+  final TextEditingController _registrationNumberController = TextEditingController();
+  final TextEditingController _hospitalAffiliationController = TextEditingController();
+
+  @override
+  void dispose() {
+    _registrationNumberController.dispose();
+    _hospitalAffiliationController.dispose();
+    super.dispose();
+  }
 
   Future<void> pickFile(Function(File?, String?) onFilePicked) async {
     try {
@@ -164,6 +176,72 @@ class _DoctorDocumentsState extends State<DoctorDocuments> {
                   ),
                   const SizedBox(height: 24),
 
+                  // Medical Council Registration Number Input
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Medical Council Registration Number',
+                            style: TextStyle(
+                              color: textColor,
+                              fontSize: isDesktop ? 16 : 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            ' *',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: isDesktop ? 16 : 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _registrationNumberController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your registration number',
+                          hintStyle: TextStyle(
+                            color: Colors.grey.shade400,
+                            fontSize: isDesktop ? 15 : 14,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: isDesktop ? 16 : 14,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: borderColor,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: borderColor,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: appColor,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
                   // Government ID
                   DocumentUploadField(
                     title: 'Government ID',
@@ -196,6 +274,60 @@ class _DoctorDocumentsState extends State<DoctorDocuments> {
                       });
                     }),
                   ),
+                  const SizedBox(height: 24),
+
+                  // Hospital / Clinic Affiliation Input
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hospital / Clinic Affiliation',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: isDesktop ? 16 : 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _hospitalAffiliationController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter hospital/clinic name',
+                          hintStyle: TextStyle(
+                            color: Colors.grey.shade400,
+                            fontSize: isDesktop ? 15 : 14,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: isDesktop ? 16 : 14,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: borderColor,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: borderColor,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: appColor,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 40),
 
                   // Submit Button
@@ -203,14 +335,14 @@ class _DoctorDocumentsState extends State<DoctorDocuments> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DocumentsVerification(),
-                              ),
-                            );
                         if (medicalDegreeCertificate == null) {
-                          
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Please upload Medical Degree Certificate',
+                              ),
+                            ),
+                          );
                           return;
                         }
                         if (medicalCouncilRegistration == null) {
@@ -232,12 +364,12 @@ class _DoctorDocumentsState extends State<DoctorDocuments> {
                           return;
                         }
 
-                        // All validations passed
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Documents submitted successfully for verification',
-                            ),
+                        // All validations passed - Navigate to verification progress
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const DoctorVerificationProgress(),
                           ),
                         );
                       },

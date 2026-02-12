@@ -18,7 +18,7 @@ class _DoctorConsultState extends State<DoctorConsult> {
   String _selectedFilter = 'Pending';
   final Color _primaryColor = const Color(0xFF199A8E);
 
-  // Consultation data
+  // Consultation data with different statuses
   final List<Map<String, dynamic>> _consultations = [
     {
       'name': 'Sarah Johnson',
@@ -27,6 +27,7 @@ class _DoctorConsultState extends State<DoctorConsult> {
       'time': '10:30 AM',
       'category': 'General',
       'status': 'Pending',
+      'reason': 'Experiencing persistent headaches for the past week',
     },
     {
       'name': 'Raj Patel',
@@ -34,7 +35,8 @@ class _DoctorConsultState extends State<DoctorConsult> {
       'date': 'Jan 15, 2024',
       'time': '11:30 AM',
       'category': 'Cardiology',
-      'status': 'Pending',
+      'status': 'Accepted',
+      'reason': 'Follow-up consultation for blood pressure monitoring',
     },
     {
       'name': 'Priya Sharma',
@@ -43,6 +45,34 @@ class _DoctorConsultState extends State<DoctorConsult> {
       'time': '2:00 PM',
       'category': 'Dermatology',
       'status': 'Pending',
+      'reason': 'Skin irritation and rash consultation',
+    },
+    {
+      'name': 'Amit Kumar',
+      'initials': 'AK',
+      'date': 'Jan 14, 2024',
+      'time': '3:00 PM',
+      'category': 'General',
+      'status': 'Rejected',
+      'reason': 'Fever and cold symptoms',
+    },
+    {
+      'name': 'Neha Singh',
+      'initials': 'NS',
+      'date': 'Jan 16, 2024',
+      'time': '9:00 AM',
+      'category': 'Oncology',
+      'status': 'Accepted',
+      'reason': 'Regular check-up and medication review',
+    },
+    {
+      'name': 'Vikram Patel',
+      'initials': 'VP',
+      'date': 'Jan 16, 2024',
+      'time': '4:30 PM',
+      'category': 'Orthopedics',
+      'status': 'Pending',
+      'reason': 'Knee pain and mobility issues',
     },
   ];
 
@@ -106,13 +136,13 @@ class _DoctorConsultState extends State<DoctorConsult> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            _buildFilterButton('Pending', 3, isDesktop),
+                            _buildFilterButton('Pending', _getCountByStatus('Pending'), isDesktop),
                             const SizedBox(width: 12),
-                            _buildFilterButton('Accepted', 5, isDesktop),
+                            _buildFilterButton('Accepted', _getCountByStatus('Accepted'), isDesktop),
                             const SizedBox(width: 12),
-                            _buildFilterButton('Completed', 28, isDesktop),
+                            _buildFilterButton('Completed', _getCountByStatus('Completed'), isDesktop),
                             const SizedBox(width: 12),
-                            _buildFilterButton('Rejected', 2, isDesktop),
+                            _buildFilterButton('Rejected', _getCountByStatus('Rejected'), isDesktop),
                           ],
                         ),
                       ),
@@ -188,13 +218,37 @@ class _DoctorConsultState extends State<DoctorConsult> {
     );
   }
 
+  int _getCountByStatus(String status) {
+    return _consultations.where((consultation) => consultation['status'] == status).length;
+  }
+
   Widget _buildConsultationsList(bool isDesktop) {
+    // Filter consultations by selected status
+    final filteredConsultations = _consultations
+        .where((consultation) => consultation['status'] == _selectedFilter)
+        .toList();
+
+    if (filteredConsultations.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40),
+          child: Text(
+            'No $_selectedFilter consultations',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+            ),
+          ),
+        ),
+      );
+    }
+
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: _consultations.length,
+      itemCount: filteredConsultations.length,
       itemBuilder: (context, index) {
-        final consultation = _consultations[index];
+        final consultation = filteredConsultations[index];
         return _buildConsultationCard(consultation, isDesktop);
       },
     );
@@ -315,21 +369,51 @@ class _DoctorConsultState extends State<DoctorConsult> {
               vertical: isDesktop ? 8 : 6,
             ),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFF8DC), // Light yellow for Pending
+              color: _getStatusBadgeColor(consultation['status']),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
               consultation['status'],
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFFD4A025), // Darker yellow for text
+                color: _getStatusTextColor(consultation['status']),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Color _getStatusBadgeColor(String status) {
+    switch (status) {
+      case 'Pending':
+        return const Color(0xFFFFF8DC); // Light yellow
+      case 'Accepted':
+        return const Color(0xFFE8F5E9); // Light green
+      case 'Rejected':
+        return const Color(0xFFFFEBEE); // Light red
+      case 'Completed':
+        return const Color(0xFFE3F2FD); // Light blue
+      default:
+        return const Color(0xFFF5F5F5); // Gray
+    }
+  }
+
+  Color _getStatusTextColor(String status) {
+    switch (status) {
+      case 'Pending':
+        return const Color(0xFFD4A025); // Dark yellow
+      case 'Accepted':
+        return const Color(0xFF4CAF50); // Green
+      case 'Rejected':
+        return const Color(0xFFE53935); // Red
+      case 'Completed':
+        return const Color(0xFF1976D2); // Blue
+      default:
+        return Colors.grey;
+    }
   }
 
   Widget _buildBottomNavigationBar() {
@@ -382,7 +466,10 @@ class _DoctorConsultState extends State<DoctorConsult> {
           break;
 
         case 2:
-          
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DoctorConsult()),
+          );
           break;
 
         case 3:
