@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/finddoctor.dart';
 
 class DoctorVisitUrgencyPage extends StatelessWidget {
   const DoctorVisitUrgencyPage({Key? key}) : super(key: key);
@@ -226,12 +227,12 @@ class DoctorVisitUrgencyPage extends StatelessWidget {
                 height: isMobile ? 56 : 60,
                 child: ElevatedButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Proceeding to consultation...'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FindDoctorsPage(),
+                              ),
+                            );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF17A697),

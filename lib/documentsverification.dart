@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:symtom_checker/doctor_dashboard.dart';
+
 
 class DocumentsVerification extends StatefulWidget {
   final String? doctorName;
@@ -135,9 +137,15 @@ class _DocumentsVerificationState extends State<DocumentsVerification>
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: widget.onDashboardTap ??
+                        onPressed:
+                            widget.onDashboardTap ??
                             () {
-                              
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoctorDashboard(),
+                                ),
+                              );
                             },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF199A8E),
@@ -162,10 +170,7 @@ class _DocumentsVerificationState extends State<DocumentsVerification>
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            Icon(
-                              Icons.arrow_forward,
-                              size: isMobile ? 18 : 20,
-                            ),
+                            Icon(Icons.arrow_forward, size: isMobile ? 18 : 20),
                           ],
                         ),
                       ),
