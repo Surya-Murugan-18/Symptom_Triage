@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/doctor_completed_reporttab.dart';
+import 'package:symtom_checker/doctor_completed_summary.dart';
 
 class CompletedConsultationsPage extends StatefulWidget {
   const CompletedConsultationsPage({super.key});
@@ -230,7 +232,12 @@ class _CompletedConsultationsPageState extends State<CompletedConsultationsPage>
             children: [
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorCompletedSummary()),
+                      );
+                  },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Color(0xFFE0E0E0)),
                     padding: const EdgeInsets.symmetric(vertical: 18),
@@ -246,7 +253,12 @@ class _CompletedConsultationsPageState extends State<CompletedConsultationsPage>
               const SizedBox(width: 10),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FullReportPage()),
+                      );
+                  },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: _primary),
                     padding: const EdgeInsets.symmetric(vertical: 18),

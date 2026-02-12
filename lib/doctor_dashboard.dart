@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/doctor-Profile.dart';
 import 'package:symtom_checker/doctor_activetab.dart';
 import 'package:symtom_checker/doctor_booking.dart';
 import 'package:symtom_checker/doctor_calendar.dart';
 import 'package:symtom_checker/doctor_completedtab.dart';
 import 'package:symtom_checker/doctor_consult.dart';
+import 'package:symtom_checker/doctor_createslot.dart';
+import 'package:symtom_checker/doctor_messages_list.dart';
+import 'package:symtom_checker/doctor_notifications.dart';
+import 'package:symtom_checker/doctor_payment_pending.dart';
+import 'package:symtom_checker/doctor_slot_created.dart';
 import 'package:symtom_checker/doctor_statistics.dart';
 import 'package:symtom_checker/doctordetail.dart';
 import 'package:symtom_checker/doctordocuments.dart';
@@ -277,7 +283,10 @@ Widget _buildStatsGrid(bool isDesktop) {
         iconColor: const Color(0xFFFFA726),
         bgColor: const Color(0xFFFFF3E0),
         onTap: () {
-          // Navigate to Pending Payments
+           Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorPaymentPending()),
+                      );
         },
       ),
     ],
@@ -377,7 +386,10 @@ Widget _buildStatCard({
               FontAwesomeIcons.plus,
               'Create Slot',
               onTap: () {
-                // Navigate to Create Slot screen
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorCreateSlot()),
+                      );
               },
             ),
           ),
@@ -478,7 +490,12 @@ Widget _buildStatCard({
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorCalendar()),
+                      );
+          },
           child: Row(
             children: [
               Text(
@@ -670,7 +687,7 @@ Widget _buildStatCard({
         case 1:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const DoctorDetailPage()),
+            MaterialPageRoute(builder: (context) => const DoctorMessagesList()),
           );
           break;
 
@@ -685,14 +702,14 @@ Widget _buildStatCard({
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const DoctorSignIn()),
+                builder: (context) => const DoctorNotifications()),
           );
           break;
 
         case 4:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const DoctorDocuments()),
+            MaterialPageRoute(builder: (context) => const DoctorProfile()),
           );
           break;
       }

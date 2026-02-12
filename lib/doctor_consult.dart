@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:symtom_checker/doctor-Profile.dart';
+import 'package:symtom_checker/doctor_dashboard.dart';
+import 'package:symtom_checker/doctor_messages_list.dart';
+import 'package:symtom_checker/doctor_notifications.dart';
 
 class DoctorConsult extends StatefulWidget {
   const DoctorConsult({Key? key}) : super(key: key);
@@ -357,7 +361,46 @@ class _DoctorConsultState extends State<DoctorConsult> {
   Widget _buildNavItem(IconData icon, String label, int index) {
     bool isSelected = _selectedIndex == index;
     return GestureDetector(
-      onTap: () => setState(() => _selectedIndex = index),
+      onTap: () {
+      setState(() {
+        _selectedIndex = index;
+      });
+
+      switch (index) {
+        case 0:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorDashboard()),
+          );
+          break;
+
+        case 1:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorMessagesList()),
+          );
+          break;
+
+        case 2:
+          
+          break;
+
+        case 3:
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const DoctorNotifications()),
+          );
+          break;
+
+        case 4:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorProfile()),
+          );
+          break;
+      }
+    },
       behavior: HitTestBehavior.opaque,
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class FullReportPage extends StatelessWidget {
+class FullReportPage extends StatefulWidget {
   const FullReportPage({super.key});
 
+  @override
+  State<FullReportPage> createState() => _FullReportPageState();
+}
+
+class _FullReportPageState extends State<FullReportPage> {
   static const Color _primary = Color(0xFF199A8E);
   static const Color _infoBg = Color(0xFFE3F2FD);
   static const Color _infoIcon = Color(0xFF2196F3);
@@ -31,7 +36,7 @@ class FullReportPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 16),
-                            _buildSafetyNotice(),
+                       //     _buildSafetyNotice(),
                             const SizedBox(height: 16),
                             _buildReportSection(
                               title: 'CONSULTATION SUMMARY',
@@ -101,7 +106,7 @@ class FullReportPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSafetyNotice() {
+ /* Widget _buildSafetyNotice() {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -117,7 +122,7 @@ class FullReportPage extends StatelessWidget {
             child: FaIcon(FontAwesomeIcons.circleInfo, size: 16, color: _infoIcon),
           ),
           const SizedBox(width: 10),
-          Expanded(
+         Expanded(
             child: RichText(
               text: const TextSpan(
                 style: TextStyle(fontSize: 13, height: 1.4, color: Color(0xFF1976D2)),
@@ -132,11 +137,11 @@ class FullReportPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          ), 
         ],
       ),
     );
-  }
+  } */
 
   Widget _buildReportSection({
     required String title,
@@ -185,7 +190,7 @@ class FullReportPage extends StatelessWidget {
           width: double.infinity,
           height: 46,
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: _showResendDialog,
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: Color(0xFFE0E0E0)),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -198,6 +203,138 @@ class FullReportPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showResendDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          backgroundColor: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Resend Report?',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Are you sure you want to resend this consultation report to the patient?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF666666),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Color(0xFFE0E0E0)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF666666),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          _showSuccessPopup();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF199A8E),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: const Text(
+                          'Resend',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSuccessPopup() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
+        });
+        
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          backgroundColor: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF199A8E),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Report sent Successfully',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
