@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:symtom_checker/doctor_appointment_video.dart';
 
 class ConsultationDetailsPage extends StatefulWidget {
   final ConsultationDetailsData? consultationData;
@@ -66,33 +67,93 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
         ),
         centerTitle: false,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile
-                ? 16
-                : isTablet
-                ? 24
-                : 32,
-            vertical: isMobile ? 16 : 24,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Patient Card
-              _buildPatientCard(isMobile, isTablet),
-              const SizedBox(height: 24),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile
+                    ? 16
+                    : isTablet
+                    ? 24
+                    : 32,
+                vertical: isMobile ? 16 : 24,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Patient Card
+                  _buildPatientCard(isMobile, isTablet),
+                  const SizedBox(height: 24),
 
-              // Appointment Time Card
-              _buildAppointmentCard(isMobile, isTablet),
-              const SizedBox(height: 24),
+                  // Appointment Time Card
+                  _buildAppointmentCard(isMobile, isTablet),
+                  const SizedBox(height: 24),
 
-              // Symptom Context Section
-              _buildSymptomContextSection(isMobile, isTablet),
-              const SizedBox(height: 40),
-            ],
+                  // Symptom Context Section
+                  _buildSymptomContextSection(isMobile, isTablet),
+                  const SizedBox(height: 100),
+                ],
+              ),
+            ),
           ),
-        ),
+          // Start Consultation Button
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 16 : 24,
+                vertical: isMobile ? 12 : 16,
+              ),
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.grey.shade200,
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle start consultation action
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => DoctorAppointmentVideo()),
+                      );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: appColor,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const FaIcon(FontAwesomeIcons.video, size: 18),
+                      const SizedBox(width: 8),
+                      const Text(
+                        'Start Consultation',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
